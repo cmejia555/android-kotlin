@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Built
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -27,10 +27,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout to master
-        run: |
-          git fetch --all 
-          git checkout master
       - name: Deploy to master
         run: |
+          git pull 
+          git checkout master
           git merge develop
