@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
 
@@ -42,6 +43,8 @@ class LoginFragment : Fragment() {
         super.onStart()
 
         loginButton.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment()
+            v.findNavController().navigate(action)
         }
     }
 
