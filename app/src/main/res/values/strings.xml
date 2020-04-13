@@ -5,4 +5,11 @@
     <string name="down_size_button">DOWN</string>
     <string name="toggle_button">TOGGLE</string>
     <string name="color_button">COLOR</string>
+
+    <!-- Login Fragment -->
+    <string name="title_text_view">Sign In</string>
+    <string name="username_edit_text">Username</string>
+    <string name="password_edit_text">Password</string>
+    <string name="login_button">Login</string>
+    <string name="sign_up_text_view">Sign Up</string>
 </resources>
