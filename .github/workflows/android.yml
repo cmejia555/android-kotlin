@@ -34,3 +34,4 @@ jobs:
           git config --global user.email "cesarmejia555@yahoo.com.ar"
           git config --global user.name "cmejia"
           git merge develop --allow-unrelated-histories
+          git push
