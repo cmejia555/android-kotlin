@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: Built
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +21,16 @@ jobs:
       run: ./gradlew build
   
   deploy:
+    name: Deploy
     runs-on: [ubuntu-latest]
+    needs: build
+    
     steps:
       - uses: actions/checkout@v2
       - name: Checkout to master
-        run: git checkout master
+        run: |
+          git fetch --all 
+          git checkout master
       - name: Deploy to master
-        run: git merge develop
+        run: |
+          git merge develop
