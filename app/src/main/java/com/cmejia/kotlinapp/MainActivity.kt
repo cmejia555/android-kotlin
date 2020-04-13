@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.cmejia.kotlinapp.clases.User
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var downSizeButton: Button
     lateinit var toggleButton: Button
     lateinit var colorButton: Button
+
+    lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +28,9 @@ class MainActivity : AppCompatActivity() {
         toggleButton = findViewById(R.id.btn_toggle)
         colorButton = findViewById(R.id.btn_change_color)
 
-        messageTextView.text = "Bienvenido"
+        user = User("cmejia", "cmejia@google.com", "abcd")
+
+        messageTextView.text = user.username
 
         var size : Float = messageTextView.textSize
 
