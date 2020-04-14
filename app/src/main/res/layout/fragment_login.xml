@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.LoginFragment">
@@ -51,8 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/username_edit_text"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -64,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:inputType="textPassword"
         android:hint="@string/password_edit_text"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/username_et" />
