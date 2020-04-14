@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
+import com.cmejia.kotlinapp.clases.User
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +21,7 @@ import com.cmejia.kotlinapp.R
 class LoginFragment : Fragment() {
 
     lateinit var v : View
+    lateinit var user : User
 
     lateinit var usernameEditText: EditText
     lateinit var passwordEditText: EditText
@@ -35,6 +39,7 @@ class LoginFragment : Fragment() {
         passwordEditText = v.findViewById(R.id.password_et)
         loginButton = v.findViewById(R.id.login_btn)
         signUpTextView = v.findViewById(R.id.sign_up_tv)
+        user = User("cmejia", "cmejia@google.com", "abcd")
 
         return v
     }
@@ -43,9 +48,24 @@ class LoginFragment : Fragment() {
         super.onStart()
 
         loginButton.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment()
-            v.findNavController().navigate(action)
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
+
+            if (username.isNotBlank() && password.isNotBlank()) {
+                if (isUserValid(username, password)) {
+                    val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment(username)
+                    v.findNavController().navigate(action)
+                } else {
+                    Snackbar.make(v, "The username or password is incorrect", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+            else {
+                Snackbar.make(v, "Complete all fields", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
+
+    private fun isUserValid(username : String, password : String) : Boolean  =
+        (user.username == username && user.password == password)
 
 }
