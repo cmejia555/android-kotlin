@@ -11,18 +11,17 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
-import com.cmejia.kotlinapp.clases.User
+import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class LoginFragment : Fragment() {
 
-    lateinit var v : View
-    lateinit var user : User
+    private var viewModel : UserViewModel = UserViewModel()
 
+    lateinit var v : View
     lateinit var usernameEditText: EditText
     lateinit var passwordEditText: EditText
     lateinit var loginButton: Button
@@ -39,7 +38,6 @@ class LoginFragment : Fragment() {
         passwordEditText = v.findViewById(R.id.password_et)
         loginButton = v.findViewById(R.id.login_btn)
         signUpTextView = v.findViewById(R.id.sign_up_tv)
-        user = User("cmejia", "cmejia@google.com", "abcd")
 
         return v
     }
@@ -65,7 +63,12 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun isUserValid(username : String, password : String) : Boolean  =
-        (user.username == username && user.password == password)
+    private fun isUserValid(username : String, password : String) : Boolean {
+        val items = viewModel.getUsers().value!!
+        for(item in items) {
+            if (item.username == username && item.password == password) return true
+        }
+        return false
+    }
 
 }

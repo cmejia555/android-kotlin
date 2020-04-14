@@ -1,4 +1,4 @@
-package com.cmejia.kotlinapp.clases
+package com.cmejia.kotlinapp.entities
 
 class User (username : String, email: String, password : String) {
 
