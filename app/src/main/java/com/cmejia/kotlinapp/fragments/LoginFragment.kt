@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
@@ -19,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar
  */
 class LoginFragment : Fragment() {
 
-    private var viewModel : UserViewModel = UserViewModel()
+    private val viewModel : UserViewModel by activityViewModels()
 
     lateinit var v : View
     lateinit var usernameEditText: EditText
@@ -60,6 +61,11 @@ class LoginFragment : Fragment() {
             else {
                 Snackbar.make(v, "Complete all fields", Snackbar.LENGTH_SHORT).show()
             }
+        }
+
+        signUpTextView.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+            it.findNavController().navigate(action)
         }
     }
 

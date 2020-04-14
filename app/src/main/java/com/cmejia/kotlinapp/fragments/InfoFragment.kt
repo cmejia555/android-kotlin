@@ -32,7 +32,7 @@ class InfoFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        val username = InfoFragmentArgs.fromBundle(arguments!!).user
+        val username = InfoFragmentArgs.fromBundle(requireArguments()).user
         infoTextView.text = "Bienvenido: $username"
     }
 
