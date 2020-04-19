@@ -15,9 +15,9 @@ class UserViewModel : ViewModel() {
     }
 
     private fun loadUsers() : List<User> {
-        usersAsList.add(User("cmejia", "cmejia@gmail.com", "abcd"))
-        usersAsList.add(User("cesar", "cesar@yahoo.com", "1234"))
-        usersAsList.add(User("cesarmejia", "cesarmejia@outlook.com", "asdf"))
+        usersAsList.add(User("cesar mejia", "cmejia@gmail.com", "abcd"))
+        usersAsList.add(User("octavio", "octavio@yahoo.com", "1234"))
+        usersAsList.add(User("jose luis mejia", "joseluis@outlook.com", "asdf"))
 
         return usersAsList
     }
@@ -26,8 +26,8 @@ class UserViewModel : ViewModel() {
         return users
     }
 
-    fun addUser(user : String, email : String, pass : String) {
-        usersAsList.add(User(user, email, pass))
+    fun addUser(user : User) {
+        usersAsList.add(user)
         users.value = usersAsList
     }
 }

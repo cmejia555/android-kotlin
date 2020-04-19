@@ -1,8 +1,8 @@
 package com.cmejia.kotlinapp.entities
 
-class User (username : String, email: String, password : String) {
+class User (fullName : String, email: String, password : String) {
 
-    val fullName : String = username
+    val fullName : String = fullName
     val email : String = email
     val password: String = password
 

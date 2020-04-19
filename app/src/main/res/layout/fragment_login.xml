@@ -11,9 +11,9 @@
         android:id="@+id/login_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_text_view"
+        android:text="@string/login_title_text_view"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/fullName_et"
+        app:layout_constraintBottom_toTopOf="@+id/login_email_et"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -48,20 +48,20 @@
         app:layout_constraintGuide_percent="0.85" />
 
     <EditText
-        android:id="@+id/fullName_et"
+        android:id="@+id/login_email_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/username_edit_text"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/password_et"
+        android:hint="@string/email_edit_text"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/login_password_et"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/login_title_tv" />
 
     <EditText
-        android:id="@+id/password_et"
+        android:id="@+id/login_password_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -70,7 +70,7 @@
         app:layout_constraintBottom_toTopOf="@+id/login_btn"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/fullName_et" />
+        app:layout_constraintTop_toBottomOf="@+id/login_email_et" />
 
     <Button
         android:id="@+id/login_btn"
@@ -81,13 +81,13 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/password_et" />
+        app:layout_constraintTop_toBottomOf="@+id/login_password_et" />
 
     <TextView
         android:id="@+id/sign_up_tv"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:text="@string/sign_up_text_view"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_link_text_view"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
