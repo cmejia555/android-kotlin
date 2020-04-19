@@ -22,11 +22,11 @@ class LoginFragment : Fragment() {
 
     private val viewModel : UserViewModel by activityViewModels()
 
-    lateinit var v : View
-    lateinit var usernameEditText: EditText
-    lateinit var passwordEditText: EditText
-    lateinit var loginButton: Button
-    lateinit var signUpTextView: TextView
+    private lateinit var v : View
+    private lateinit var fullNameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var signUpTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_login, container, false)
 
-        usernameEditText = v.findViewById(R.id.username_et)
+        fullNameEditText = v.findViewById(R.id.fullName_et)
         passwordEditText = v.findViewById(R.id.password_et)
         loginButton = v.findViewById(R.id.login_btn)
         signUpTextView = v.findViewById(R.id.sign_up_tv)
@@ -47,7 +47,7 @@ class LoginFragment : Fragment() {
         super.onStart()
 
         loginButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
+            val username = fullNameEditText.text.toString()
             val password = passwordEditText.text.toString()
 
             if (username.isNotBlank() && password.isNotBlank()) {
@@ -72,7 +72,7 @@ class LoginFragment : Fragment() {
     private fun isUserValid(username : String, password : String) : Boolean {
         val items = viewModel.getUsers().value!!
         for(item in items) {
-            if (item.username == username && item.password == password) return true
+            if (item.fullName == username && item.password == password) return true
         }
         return false
     }
