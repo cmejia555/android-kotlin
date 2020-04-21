@@ -8,7 +8,7 @@ import com.cmejia.kotlinapp.entities.User
 class UserViewModel : ViewModel() {
 
     private var usersAsList : MutableList<User> = ArrayList()
-    private var users = MutableLiveData<List<User>>()
+    private var users : MutableLiveData<List<User>> = MutableLiveData<List<User>>()
 
     init {
         users.value = loadUsers()

@@ -54,7 +54,9 @@ class LoginFragment : Fragment() {
             if (email.isNotBlank() && password.isNotBlank()) {
                 val user = authenticate(email, password)
                 if (user != null) {
-                    val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment(user.fullName)
+                    //val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment(user.fullName)
+                    //it.findNavController().navigate(action)
+                    val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {
                     Snackbar.make(it, "The email or password is incorrect", Snackbar.LENGTH_SHORT).show()
