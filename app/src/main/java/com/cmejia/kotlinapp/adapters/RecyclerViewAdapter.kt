@@ -9,17 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 
-class CarListAdapter(private var carList : MutableList<Car>, val adapterOnClick : (item: Int) -> Unit) :
-    RecyclerView.Adapter<CarListAdapter.CarsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarsViewHolder {
+class RecyclerViewAdapter(var carList : MutableList<Car>,
+                          val adapterOnClick : (item: Int) -> Unit) :
+                    RecyclerView.Adapter<RecyclerViewAdapter.CarViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.car_list_item, parent, false) as View
 
-        return CarsViewHolder(view)
+        return CarViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CarsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CarViewHolder, position: Int) {
         //holder.view.findViewById<TextView>(R.id.list_movie_title).text = moviesList[position].title
         holder.setBrand(carList[position].brand)
         //holder.view.findViewById<CardView>(R.id.card_layout).setOnClickListener {
@@ -35,7 +37,7 @@ class CarListAdapter(private var carList : MutableList<Car>, val adapterOnClick 
     }
 
 
-    class CarsViewHolder (private val view : View) : RecyclerView.ViewHolder(view) {
+    class CarViewHolder (private val view : View) : RecyclerView.ViewHolder(view) {
 
         val layout : CardView
             get() {
@@ -43,9 +45,8 @@ class CarListAdapter(private var carList : MutableList<Car>, val adapterOnClick 
             }
 
         fun setBrand(name : String) {
-            val txt : TextView = view.findViewById(R.id.name_item_tv)
-            txt.text = name
+            val brandTextView : TextView = view.findViewById(R.id.name_item_tv)
+            brandTextView.text = name
         }
-
     }
 }

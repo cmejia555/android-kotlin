@@ -16,9 +16,7 @@ import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class LoginFragment : Fragment() {
 
     private val viewModel : UserViewModel by activityViewModels()
@@ -33,7 +31,6 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_login, container, false)
 
         emailEditText = v.findViewById(R.id.login_email_et)

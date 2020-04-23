@@ -5,32 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.cmejia.kotlinapp.R
-import com.cmejia.kotlinapp.adapters.CarListAdapter
-import com.cmejia.kotlinapp.entities.Car
+import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
+import com.cmejia.kotlinapp.models.CarsViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class ListFragment : Fragment() {
 
-    private lateinit var addFloatingButton : FloatingActionButton
-    private lateinit var carsRecyclerView : RecyclerView
-    private lateinit var layoutManager: RecyclerView.LayoutManager
-    private lateinit var listAdapter : CarListAdapter
+    private val carViewModel : CarsViewModel by activityViewModels()
 
-    private var carList : MutableList<Car> = ArrayList()
+    private lateinit var addFloatingButton : FloatingActionButton
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var adapter : RecyclerViewAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -38,17 +36,13 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        layoutManager = LinearLayoutManager(context)
-        carList.add(Car("Chevrolet", 2010, 1, "Full"))
-        listAdapter = CarListAdapter(carList) { item : Int ->
+        adapter = RecyclerViewAdapter(carViewModel.getCars()) { item : Int ->
             Snackbar.make(view, "Pressed position =$item", Snackbar.LENGTH_SHORT).show()
         }
 
-
-        carsRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerview).apply {
-            layoutManager = layoutManager
-            adapter = listAdapter
-        }
+        recyclerView = view.findViewById(R.id.recyclerview_list)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
     }
 
