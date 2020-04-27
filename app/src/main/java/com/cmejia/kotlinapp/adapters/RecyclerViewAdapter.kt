@@ -3,6 +3,7 @@ package com.cmejia.kotlinapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +11,7 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 
 
-class RecyclerViewAdapter(private var carList : MutableList<Car>,
-                          val adapterOnClick : (item: Int) -> Unit) :
+class RecyclerViewAdapter(private var carList : MutableList<Car>, val adapterOnClick : (item: Int) -> Unit) :
                     RecyclerView.Adapter<RecyclerViewAdapter.CarViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
@@ -22,7 +22,9 @@ class RecyclerViewAdapter(private var carList : MutableList<Car>,
     }
 
     override fun onBindViewHolder(holder: CarViewHolder, position: Int) {
-        holder.brandTextView.text = (carList[position].brand)
+        val item = carList[position]
+        holder.brandTextView.text = item.brand
+        holder.image.setImageResource(item.imageId!!)
         holder.rootLayout.setOnClickListener {
             adapterOnClick(position)
         }
@@ -32,7 +34,8 @@ class RecyclerViewAdapter(private var carList : MutableList<Car>,
 
 
     class CarViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val brandTextView : TextView = view.findViewById(R.id.name_item_tv)
+        val brandTextView : TextView = view.findViewById(R.id.item_car_model)
+        val image : ImageView = view.findViewById(R.id.item_car_image)
         val rootLayout : CardView = view.findViewById(R.id.card_layout)
     }
 }

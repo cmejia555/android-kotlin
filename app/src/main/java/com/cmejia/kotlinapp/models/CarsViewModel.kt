@@ -1,8 +1,8 @@
 package com.cmejia.kotlinapp.models
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 
 class CarsViewModel : ViewModel() {
@@ -16,9 +16,9 @@ class CarsViewModel : ViewModel() {
 
     private fun loadUsers() : MutableList<Car> {
         carsAsList = mutableListOf(
-            Car("Chevrolet", "Meriva", 2010),
-            Car("Peugeot", "206", 2014),
-            Car("Ford", "Focus", 2017)
+            Car("Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva),
+            Car("Peugeot", "206", 2014, imageId = R.drawable.peugeot_206),
+            Car("Ford", "Focus", 2017, imageId = R.drawable.focus)
         )
 
         return carsAsList
