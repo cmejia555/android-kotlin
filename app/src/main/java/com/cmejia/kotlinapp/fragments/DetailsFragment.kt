@@ -6,6 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
@@ -21,6 +23,7 @@ class DetailsFragment : Fragment() {
     lateinit var carYear : TextView
     lateinit var carDescription : TextView
 
+    lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -54,15 +57,13 @@ class DetailsFragment : Fragment() {
     }
 
     private fun updateUi(position : Int) {
-        val car : Car? = carsViewModel.getCar(position)
+        car = carsViewModel.getCar(position)!!
 
-        if (car != null) {
-            carImage.setImageResource(car.imageId!!)
-            carBrand.text = getString(R.string.car_brand, car.brand)
-            carModel.text = getString(R.string.car_model, car.model)
-            carYear.text = getString(R.string.car_year, car.year)
-            carDescription.text = getString(R.string.car_description, car.description)
-        }
+        carImage.setImageResource(car.imageId!!)
+        carBrand.text = getString(R.string.car_brand, car.brand)
+        carModel.text = getString(R.string.car_model, car.model)
+        carYear.text = getString(R.string.car_year, car.year)
+        carDescription.text = getString(R.string.car_description, car.description)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -73,7 +74,11 @@ class DetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
-            R.id.action_delete -> Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
+            R.id.action_delete -> {
+                Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
+                carsViewModel.deleteCar(car)
+                v.findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment())
+            }
         }
         return super.onOptionsItemSelected(item)
     }

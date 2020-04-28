@@ -36,4 +36,10 @@ class CarsViewModel : ViewModel() {
         carsAsList.add(car)
         cars.value = carsAsList
     }
+
+    fun deleteCar(car: Car) {
+        cars.value = cars.value?.filter {
+            it.imageId != car.imageId
+        }
+    }
 }
