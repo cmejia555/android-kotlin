@@ -1,10 +1,8 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +12,8 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_list.*
 
 
 class ListFragment : Fragment() {
@@ -45,11 +45,24 @@ class ListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerview_list)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_toolbar, menu)
+        //(activity as AppCompatActivity).supportActionBar?.title = getString(R.string.my_movies)
+        //(activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

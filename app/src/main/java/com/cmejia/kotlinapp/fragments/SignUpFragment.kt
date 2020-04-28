@@ -65,7 +65,6 @@ class SignUpFragment : Fragment() {
                 Snackbar.make(it, "Please complete all fields", Snackbar.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun isUserRegistered(byEmail : String) : Boolean {

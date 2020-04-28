@@ -15,9 +15,9 @@ class UserViewModel : ViewModel() {
     }
 
     private fun loadUsers() : List<User> {
-        usersAsList.add(User("cesar mejia", "cmejia@gmail.com", "abcd"))
+        usersAsList.add(User("cesar mejia", "cmejia@gmail.com", "1234"))
         usersAsList.add(User("octavio", "octavio@yahoo.com", "1234"))
-        usersAsList.add(User("jose luis mejia", "joseluis@outlook.com", "asdf"))
+        usersAsList.add(User("jose luis mejia", "joseluis@outlook.com", "1234"))
 
         return usersAsList
     }

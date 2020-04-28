@@ -1,10 +1,8 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -51,8 +49,6 @@ class LoginFragment : Fragment() {
             if (email.isNotBlank() && password.isNotBlank()) {
                 val user = authenticate(email, password)
                 if (user != null) {
-                    //val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment(user.fullName)
-                    //it.findNavController().navigate(action)
                     val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {

@@ -1,9 +1,7 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -11,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class DetailsFragment : Fragment() {
@@ -29,7 +28,9 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        v = inflater.inflate(R.layout.fragment_details, container, false)
+
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,9 +43,12 @@ class DetailsFragment : Fragment() {
         carDescription = view.findViewById(R.id.car_description)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     override fun onStart() {
         super.onStart()
-
         val position = DetailsFragmentArgs.fromBundle(requireArguments()).position
         updateUi(position)
     }
@@ -59,6 +63,19 @@ class DetailsFragment : Fragment() {
             carYear.text = getString(R.string.car_year, car.year)
             carDescription.text = getString(R.string.car_description, car.description)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.details_toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
+            R.id.action_delete -> Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
