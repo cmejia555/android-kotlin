@@ -23,7 +23,7 @@ class RecyclerViewAdapter(private var carList : MutableList<Car>, val adapterOnC
 
     override fun onBindViewHolder(holder: CarViewHolder, position: Int) {
         val item = carList[position]
-        holder.brandTextView.text = item.brand
+        holder.modelTextView.text = item.model
         holder.image.setImageResource(item.imageId!!)
         holder.rootLayout.setOnClickListener {
             adapterOnClick(position)
@@ -34,7 +34,7 @@ class RecyclerViewAdapter(private var carList : MutableList<Car>, val adapterOnC
 
 
     class CarViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val brandTextView : TextView = view.findViewById(R.id.item_car_model)
+        val modelTextView : TextView = view.findViewById(R.id.item_car_model)
         val image : ImageView = view.findViewById(R.id.item_car_image)
         val rootLayout : CardView = view.findViewById(R.id.card_layout)
     }

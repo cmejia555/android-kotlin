@@ -9,9 +9,7 @@ import android.widget.TextView
 
 import com.cmejia.kotlinapp.R
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class InfoFragment : Fragment() {
 
     lateinit var v : View

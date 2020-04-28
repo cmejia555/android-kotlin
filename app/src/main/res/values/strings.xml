@@ -19,7 +19,12 @@
     <string name="register_button">Register</string>
 
     <!-- Item -->
-    <string name="car_model">Model</string>
-    <string name="car_image_describe">Imagen del auto</string>
+    <string name="car_model">Model: %1$s</string>
+    <string name="car_image_description">Car\'s image</string>
+
+    <!-- Details Fragment -->
+    <string name="car_brand">Brand: %1$s</string>
+    <string name="car_year">Year: %1$d</string>
+    <string name="car_description">Description: %1$s</string>
 
 </resources>

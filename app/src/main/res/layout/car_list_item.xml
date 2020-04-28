@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/image_not_available"
-            android:contentDescription="@string/car_image_describe" />
+            android:contentDescription="@string/car_image_description" />
 
         <TextView
             android:id="@+id/item_car_model"

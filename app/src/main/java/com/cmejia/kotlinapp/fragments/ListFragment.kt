@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,7 +14,6 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 
 
 class ListFragment : Fragment() {
@@ -36,8 +36,10 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        adapter = RecyclerViewAdapter(carViewModel.getCars()) { item : Int ->
-            Snackbar.make(view, "Pressed position =$item", Snackbar.LENGTH_SHORT).show()
+        adapter = RecyclerViewAdapter(carViewModel.getCars()) { position : Int ->
+            view.findNavController().navigate(
+                ListFragmentDirections.actionListFragmentToDetailsFragment(position)
+            )
         }
 
         recyclerView = view.findViewById(R.id.recyclerview_list)
@@ -48,10 +50,6 @@ class ListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-    }
-
-    private fun onItemClick () {
-        //Snackbar.make(v,"click", Snackbar.LENGTH_SHORT).show()
     }
 
 }
