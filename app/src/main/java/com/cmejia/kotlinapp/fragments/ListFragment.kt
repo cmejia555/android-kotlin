@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
+import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -50,6 +51,14 @@ class ListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        addFloatingButton.setOnClickListener {
+            carViewModel.addCar(Car("Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
+            adapter.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

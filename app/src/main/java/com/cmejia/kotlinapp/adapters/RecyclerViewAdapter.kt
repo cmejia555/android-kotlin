@@ -11,8 +11,10 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 
 
-class RecyclerViewAdapter(private var carList : MutableList<Car>, val adapterOnClick : (item: Int) -> Unit) :
+class RecyclerViewAdapter(list : MutableList<Car>, val adapterOnClick : (item: Int) -> Unit) :
                     RecyclerView.Adapter<RecyclerViewAdapter.CarViewHolder>() {
+
+    private var carList : MutableList<Car> = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
         val view = LayoutInflater.from(parent.context)

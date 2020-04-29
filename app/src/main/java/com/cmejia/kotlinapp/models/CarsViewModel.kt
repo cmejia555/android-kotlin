@@ -20,7 +20,6 @@ class CarsViewModel : ViewModel() {
             Car("Peugeot", "206", 2014, imageId = R.drawable.peugeot_206),
             Car("Ford", "Focus", 2017, imageId = R.drawable.focus)
         )
-
         return carsAsList
     }
 
@@ -33,13 +32,16 @@ class CarsViewModel : ViewModel() {
     }
 
     fun addCar(car : Car) {
-        carsAsList.add(car)
-        cars.value = carsAsList
+        cars.value.apply {
+            (this as MutableList).add(car)
+        }
     }
 
     fun deleteCar(car: Car) {
-        cars.value = cars.value?.filter {
-            it.imageId != car.imageId
+        cars.value.apply {
+            (this as MutableList).removeAll {
+                it.imageId == car.imageId
+            }
         }
     }
 }
