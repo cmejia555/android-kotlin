@@ -18,7 +18,7 @@ class RecyclerViewAdapter(list : MutableList<Car>, val adapterOnClick : (item: I
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.car_list_item, parent, false) as View
+            .inflate(R.layout.list_item, parent, false) as View
 
         return CarViewHolder(view)
     }

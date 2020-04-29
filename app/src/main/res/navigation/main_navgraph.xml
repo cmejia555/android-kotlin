@@ -11,25 +11,11 @@
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_infoFragment"
-            app:destination="@id/infoFragment"
-            app:popUpTo="@id/infoFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_loginFragment_to_listFragment"
             app:destination="@id/listFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/infoFragment"
-        android:name="com.cmejia.kotlinapp.fragments.InfoFragment"
-        android:label="fragment_info"
-        tools:layout="@layout/fragment_info" >
-        <argument
-            android:name="user"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
