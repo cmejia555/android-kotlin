@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.cmejia.kotlinapp.fragments.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_infoFragment"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.cmejia.kotlinapp.fragments.SignUpFragment"
-        android:label="fragment_sign_up"
+        android:label="Sign"
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.cmejia.kotlinapp.fragments.ListFragment"
-        android:label="fragment_list"
+        android:label="List"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_detailsFragment"
@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.cmejia.kotlinapp.fragments.DetailsFragment"
-        android:label="fragment_details"
+        android:label="Details"
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="position"

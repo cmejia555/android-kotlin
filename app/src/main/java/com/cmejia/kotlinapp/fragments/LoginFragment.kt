@@ -31,12 +31,16 @@ class LoginFragment : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_login, container, false)
 
-        emailEditText = v.findViewById(R.id.login_email_et)
-        passwordEditText = v.findViewById(R.id.login_password_et)
-        loginButton = v.findViewById(R.id.login_btn)
-        signUpTextView = v.findViewById(R.id.sign_up_tv)
-
         return v
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        emailEditText = view.findViewById(R.id.login_email_et)
+        passwordEditText = view.findViewById(R.id.login_password_et)
+        loginButton = view.findViewById(R.id.login_btn)
+        signUpTextView = view.findViewById(R.id.sign_up_tv)
     }
 
     override fun onStart() {

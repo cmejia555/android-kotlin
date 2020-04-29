@@ -2,6 +2,8 @@ package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -25,7 +27,6 @@ class ListFragment : Fragment() {
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter : RecyclerViewAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +47,12 @@ class ListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerview_list)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
+        //(activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            view.findNavController().navigateUp()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +70,6 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_toolbar, menu)
-        //(activity as AppCompatActivity).supportActionBar?.title = getString(R.string.my_movies)
-        //(activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

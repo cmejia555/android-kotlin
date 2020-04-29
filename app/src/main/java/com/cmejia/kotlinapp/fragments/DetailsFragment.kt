@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
@@ -30,7 +32,6 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         v = inflater.inflate(R.layout.fragment_details, container, false)
 
         return v
@@ -44,12 +45,18 @@ class DetailsFragment : Fragment() {
         carModel = view.findViewById(R.id.car_model)
         carYear = view.findViewById(R.id.car_year)
         carDescription = view.findViewById(R.id.car_description)
+
+        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
+        toolbar.setNavigationOnClickListener {
+            view.findNavController().navigateUp()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
+
     override fun onStart() {
         super.onStart()
         val position = DetailsFragmentArgs.fromBundle(requireArguments()).position
