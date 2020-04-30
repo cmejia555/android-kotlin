@@ -25,7 +25,7 @@ class ListFragment : Fragment() {
 
     private lateinit var addFloatingButton : FloatingActionButton
     private lateinit var recyclerView : RecyclerView
-    private lateinit var adapter : RecyclerViewAdapter
+    private lateinit var viewAdapter : RecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,15 +38,17 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        adapter = RecyclerViewAdapter(carViewModel.getCars()) { position : Int ->
+        viewAdapter = RecyclerViewAdapter(carViewModel.getCars()) { position : Int ->
             view.findNavController().navigate(
                 ListFragmentDirections.actionListFragmentToDetailsFragment(position)
             )
         }
 
-        recyclerView = view.findViewById(R.id.recyclerview_list)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_list).apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewAdapter
+        }
 
         val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
         //(activity as AppCompatActivity).setSupportActionBar(toolbar)
@@ -64,7 +66,7 @@ class ListFragment : Fragment() {
         super.onStart()
         addFloatingButton.setOnClickListener {
             carViewModel.addCar(Car("Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
-            adapter.notifyDataSetChanged()
+            viewAdapter.notifyDataSetChanged()
         }
     }
 
