@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 
@@ -15,9 +17,7 @@ import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class SignUpFragment : Fragment() {
 
     private val viewModel : UserViewModel by activityViewModels()
@@ -32,15 +32,23 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_sign_up, container, false)
 
-        fullNameEditText = v.findViewById(R.id.full_name_et)
-        emailEditText = v.findViewById(R.id.sign_up_email_et)
-        passwordEditText = v.findViewById(R.id.sign_up_password_et)
-        registerButton = v.findViewById(R.id.register_btn)
-
         return v
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fullNameEditText = view.findViewById(R.id.full_name_et)
+        emailEditText = view.findViewById(R.id.sign_up_email_et)
+        passwordEditText = view.findViewById(R.id.sign_up_password_et)
+        registerButton = view.findViewById(R.id.register_btn)
+
+        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
+        toolbar.setNavigationOnClickListener {
+            view.findNavController().navigateUp()
+        }
     }
 
     override fun onStart() {
@@ -65,7 +73,6 @@ class SignUpFragment : Fragment() {
                 Snackbar.make(it, "Please complete all fields", Snackbar.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun isUserRegistered(byEmail : String) : Boolean {
