@@ -1,10 +1,8 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,9 +14,7 @@ import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class LoginFragment : Fragment() {
 
     private val viewModel : UserViewModel by activityViewModels()
@@ -33,15 +29,18 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_login, container, false)
 
-        emailEditText = v.findViewById(R.id.login_email_et)
-        passwordEditText = v.findViewById(R.id.login_password_et)
-        loginButton = v.findViewById(R.id.login_btn)
-        signUpTextView = v.findViewById(R.id.sign_up_tv)
-
         return v
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        emailEditText = view.findViewById(R.id.login_email_et)
+        passwordEditText = view.findViewById(R.id.login_password_et)
+        loginButton = view.findViewById(R.id.login_btn)
+        signUpTextView = view.findViewById(R.id.sign_up_tv)
     }
 
     override fun onStart() {
@@ -54,7 +53,7 @@ class LoginFragment : Fragment() {
             if (email.isNotBlank() && password.isNotBlank()) {
                 val user = authenticate(email, password)
                 if (user != null) {
-                    val action = LoginFragmentDirections.actionLoginFragmentToInfoFragment(user.fullName)
+                    val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {
                     Snackbar.make(it, "The email or password is incorrect", Snackbar.LENGTH_SHORT).show()

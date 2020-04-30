@@ -1,11 +1,6 @@
 <resources>
     <string name="app_name">KotlinApp</string>
 
-    <string name="up_size_button">UP</string>
-    <string name="down_size_button">DOWN</string>
-    <string name="toggle_button">TOGGLE</string>
-    <string name="color_button">COLOR</string>
-
     <!-- Login Fragment -->
     <string name="login_title_text_view">Sign In</string>
     <string name="email_edit_text">Email</string>
@@ -17,5 +12,23 @@
     <string name="sign_up_title_text_view">Sign Up</string>
     <string name="full_name_edit_text">Full name</string>
     <string name="register_button">Register</string>
+
+    <!-- List Item -->
+    <string name="car_model">Model: %1$s</string>
+    <string name="car_image_description">Car\'s image</string>
+
+    <!-- Details Fragment -->
+    <string name="car_brand">Brand: %1$s</string>
+    <string name="car_year">Year: %1$d</string>
+    <string name="car_description">Description: %1$s</string>
+
+    <!-- Toolbar Menu -->
+    <string name="menu_edit">Edit</string>
+    <string name="menu_add">Add</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_search">Search</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
