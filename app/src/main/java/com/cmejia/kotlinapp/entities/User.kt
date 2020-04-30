@@ -1,12 +1,21 @@
 package com.cmejia.kotlinapp.entities
 
-class User (fullName : String, email: String, password : String) {
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    val fullName : String = fullName
-    val email : String = email
-    val password: String = password
+@Entity(tableName = "users_table")
+data class User (
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val userId : Int,
 
-    override fun toString(): String {
-        return "User created: name = $fullName, email = $email"
-    }
-}
+    @ColumnInfo(name = "user_name")
+    val fullName : String,
+
+    @ColumnInfo(name = "email")
+    val email: String,
+
+    @ColumnInfo(name = "password")
+    val password : String
+)

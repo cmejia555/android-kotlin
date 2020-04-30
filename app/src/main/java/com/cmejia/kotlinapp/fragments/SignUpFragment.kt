@@ -61,7 +61,7 @@ class SignUpFragment : Fragment() {
 
             if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
                 if (!isUserRegistered(email)) {
-                    val newUser = User(fullName, email, password)
+                    val newUser = User(10, fullName, email, password)
                     viewModel.addUser(newUser)
                     val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
                     it.findNavController().navigate(action)
