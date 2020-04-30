@@ -4,18 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.entities.User
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
-abstract class UserDataBase : RoomDatabase() {
+@Database(entities = [User::class, Car::class], version = 1, exportSchema = false)
+abstract class LocalDataBase : RoomDatabase() {
 
     abstract fun userDao() : UserDao
+    abstract fun carDao() : CarDao
 
     companion object {
         @Volatile
-        private var INSTANCE : UserDataBase? = null
+        private var INSTANCE : LocalDataBase? = null
 
-        fun getInstance(context: Context): UserDataBase {
+        fun getInstance(context: Context): LocalDataBase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -23,7 +25,7 @@ abstract class UserDataBase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    UserDataBase::class.java,
+                    LocalDataBase::class.java,
                     "mydatabase"
                 ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance

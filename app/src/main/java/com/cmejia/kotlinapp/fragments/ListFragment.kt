@@ -65,7 +65,7 @@ class ListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
-            carViewModel.addCar(Car("Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
+            carViewModel.addCar(Car(10, "Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
             viewAdapter.notifyDataSetChanged()
         }
     }

@@ -11,7 +11,7 @@ data class User (
     val userId : Int,
 
     @ColumnInfo(name = "user_name")
-    val fullName : String,
+    val userName : String,
 
     @ColumnInfo(name = "email")
     val email: String,

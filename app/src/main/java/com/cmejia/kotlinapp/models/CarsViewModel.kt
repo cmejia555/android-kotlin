@@ -16,9 +16,9 @@ class CarsViewModel : ViewModel() {
 
     private fun loadUsers() : MutableList<Car> {
         carsAsList = mutableListOf(
-            Car("Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva),
-            Car("Peugeot", "206", 2014, imageId = R.drawable.peugeot_206),
-            Car("Ford", "Focus", 2017, imageId = R.drawable.focus)
+            Car(0, "Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva),
+            Car(0, "Peugeot", "206", 2014, imageId = R.drawable.peugeot_206),
+            Car(0, "Ford", "Focus", 2017, imageId = R.drawable.focus)
         )
         return carsAsList
     }
