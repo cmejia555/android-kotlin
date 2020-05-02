@@ -1,33 +1,45 @@
 package com.cmejia.kotlinapp.models
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.cmejia.kotlinapp.database.LocalDataBase
+import com.cmejia.kotlinapp.database.UserDao
 import com.cmejia.kotlinapp.entities.User
 
-class UserViewModel : ViewModel() {
+class UserViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var usersAsList : MutableList<User> = ArrayList()
-    private var users : MutableLiveData<List<User>> = MutableLiveData<List<User>>()
+    private var allUsers : LiveData<List<User>>
+    private var userDao : UserDao
+    private var newUserId : Int = 10
 
     init {
-        users.value = loadUsers()
+        userDao = LocalDataBase.getInstance(application).userDao()
+        loadUsers()
+        allUsers = userDao.getAll()
     }
 
-    private fun loadUsers() : List<User> {
-        usersAsList.add(User(0,"cesar mejia", "cmejia@gmail.com", "1234"))
-        usersAsList.add(User(1,"octavio", "octavio@yahoo.com", "1234"))
-        usersAsList.add(User(2,"jose luis mejia", "joseluis@outlook.com", "1234"))
-
-        return usersAsList
+    private fun loadUsers() {
+        insertUser(User(0,"cesar mejia", "cmejia@gmail.com", "1234"))
+        insertUser(User(1,"octavio", "octavio@yahoo.com", "1234"))
+        insertUser(User(2,"jose luis mejia", "joseluis@outlook.com", "1234"))
     }
 
-    fun getUsers(): LiveData<List<User>> {
-        return users
+    fun getAllUsers() : LiveData<List<User>> {
+        return allUsers
     }
 
-    fun addUser(user : User) {
-        usersAsList.add(user)
-        users.value = usersAsList
+    fun insertUser(user : User) {
+        user.userId = newUserId
+        userDao.insert(user)
+        newUserId++
+    }
+
+    fun getUser(byEmail : String) : User? {
+        return userDao.get(byEmail)
+    }
+
+    fun getUser(id : Int) : User? {
+        return userDao.get(id)
     }
 }

@@ -27,7 +27,7 @@ abstract class LocalDataBase : RoomDatabase() {
                     context.applicationContext,
                     LocalDataBase::class.java,
                     "mydatabase"
-                ).fallbackToDestructiveMigration().build()
+                ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

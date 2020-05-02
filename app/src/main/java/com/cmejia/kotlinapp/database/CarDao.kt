@@ -7,11 +7,11 @@ import com.cmejia.kotlinapp.entities.Car
 @Dao
 interface CarDao {
 
-    @Query("SELECT * from cars_table ORDER BY id")
+    @Query("SELECT * from cars_table ORDER BY id ASC")
     fun getAll() : LiveData<List<Car>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(car : Car)
+    fun insert(car : Car)
 
     @Update
     fun update(car: Car)

@@ -1,18 +1,22 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
-import com.cmejia.kotlinapp.entities.User
+import com.cmejia.kotlinapp.database.LocalDataBase
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.wajahatkarim3.roomexplorer.RoomExplorer
+import kotlinx.android.synthetic.main.fragment_login.*
 
 
 class LoginFragment : Fragment() {
@@ -30,7 +34,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_login, container, false)
-
         return v
     }
 
@@ -43,6 +46,13 @@ class LoginFragment : Fragment() {
         signUpTextView = view.findViewById(R.id.sign_up_tv)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
+            Log.d("DEBUG", "ESTOY EN LOGIN ${it.size}")
+        })
+    }
+
     override fun onStart() {
         super.onStart()
 
@@ -51,8 +61,7 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             if (email.isNotBlank() && password.isNotBlank()) {
-                val user = authenticate(email, password)
-                if (user != null) {
+                if (authenticate(email, password)) {
                     val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {
@@ -68,14 +77,18 @@ class LoginFragment : Fragment() {
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             it.findNavController().navigate(action)
         }
+
+        fab_database.setOnClickListener {
+            RoomExplorer.show(context, LocalDataBase::class.java, "mydatabase")
+        }
     }
 
-    private fun authenticate(email : String, password : String) : User? {
-        val users = viewModel.getUsers().value!!
+    private fun authenticate(email : String, password : String) : Boolean {
+        val users = viewModel.getAllUsers().value!!
         for(user in users) {
-            if (user.email == email && user.password == password) return user
+            if (user.email == email && user.password == password) return true
         }
-        return null
+        return false
     }
 
 }
