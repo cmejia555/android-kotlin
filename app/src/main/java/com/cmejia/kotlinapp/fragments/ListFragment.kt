@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +39,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        viewAdapter = RecyclerViewAdapter(carViewModel.getCars()) { position : Int ->
+        viewAdapter = RecyclerViewAdapter { position : Int ->
             view.findNavController().navigate(
                 ListFragmentDirections.actionListFragmentToDetailsFragment(position)
             )
@@ -51,10 +52,16 @@ class ListFragment : Fragment() {
         }
 
         val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
-        //(activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener {
             view.findNavController().navigateUp()
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        carViewModel.getAllCars().observe(viewLifecycleOwner, Observer {
+            viewAdapter.carList = it
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,8 +72,7 @@ class ListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
-            carViewModel.addCar(Car(10, "Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
-            viewAdapter.notifyDataSetChanged()
+            carViewModel.insertCar(Car(0, "Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
         }
     }
 

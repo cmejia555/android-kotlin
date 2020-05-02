@@ -1,47 +1,47 @@
 package com.cmejia.kotlinapp.models
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.cmejia.kotlinapp.R
+import com.cmejia.kotlinapp.database.CarDao
+import com.cmejia.kotlinapp.database.LocalDataBase
 import com.cmejia.kotlinapp.entities.Car
 
-class CarsViewModel : ViewModel() {
 
-    private var carsAsList : MutableList<Car> = ArrayList()
-    private var cars : MutableLiveData<List<Car>> = MutableLiveData<List<Car>>()
+class CarsViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var allCars : LiveData<List<Car>>
+    private var carDao : CarDao
+    private var newCarId : Int = 0
 
     init {
-        cars.value = loadUsers()
+        carDao = LocalDataBase.getInstance(application).carDao()
+        loadData()
+        allCars = carDao.getAll()
     }
 
-    private fun loadUsers() : MutableList<Car> {
-        carsAsList = mutableListOf(
-            Car(0, "Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva),
-            Car(0, "Peugeot", "206", 2014, imageId = R.drawable.peugeot_206),
-            Car(0, "Ford", "Focus", 2017, imageId = R.drawable.focus)
-        )
-        return carsAsList
+    private fun loadData() {
+        insertCar(Car(0, "Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva))
+        insertCar(Car(1, "Peugeot", "206", 2014, imageId = R.drawable.peugeot_206))
+        insertCar(Car(2, "Ford", "Focus", 2017, imageId = R.drawable.focus))
     }
 
-    fun getCars(): MutableList<Car> {
-        return cars.value!! as MutableList
+    fun getAllCars(): LiveData<List<Car>> {
+        return allCars
     }
 
     fun getCar(index : Int) : Car? {
-        return cars.value?.get(index)
+        return carDao.get(index)
     }
 
-    fun addCar(car : Car) {
-        cars.value.apply {
-            (this as MutableList).add(car)
-        }
+    fun insertCar(car : Car) {
+        car.carId = newCarId
+        carDao.insert(car)
+        newCarId++
     }
 
     fun deleteCar(car: Car) {
-        cars.value.apply {
-            (this as MutableList).removeAll {
-                it.imageId == car.imageId
-            }
-        }
+        carDao.delete(car)
     }
 }

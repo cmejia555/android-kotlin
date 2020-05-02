@@ -11,10 +11,14 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 
 
-class RecyclerViewAdapter(list : MutableList<Car>, val adapterOnClick : (item: Int) -> Unit) :
+class RecyclerViewAdapter(val adapterOnClick : (item: Int) -> Unit) :
                     RecyclerView.Adapter<RecyclerViewAdapter.CarViewHolder>() {
 
-    private var carList : MutableList<Car> = list
+    var carList : List<Car> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -28,14 +32,18 @@ class RecyclerViewAdapter(list : MutableList<Car>, val adapterOnClick : (item: I
         holder.modelTextView.text = item.model
         holder.image.setImageResource(item.imageId!!)
         holder.rootLayout.setOnClickListener {
-            adapterOnClick(position)
+            adapterOnClick(item.carId)
         }
     }
 
     override fun getItemCount() = carList.size
 
+    internal fun setCars(carList: List<Car>) {
+        this.carList = carList
+        notifyDataSetChanged()
+    }
 
-    class CarViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+    inner class CarViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val modelTextView : TextView = view.findViewById(R.id.item_car_model)
         val image : ImageView = view.findViewById(R.id.item_car_image)
         val rootLayout : CardView = view.findViewById(R.id.card_layout)

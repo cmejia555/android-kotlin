@@ -11,15 +11,15 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private var allUsers : LiveData<List<User>>
     private var userDao : UserDao
-    private var newUserId : Int = 10
+    private var newUserId : Int = 0
 
     init {
         userDao = LocalDataBase.getInstance(application).userDao()
-        loadUsers()
+        loadData()
         allUsers = userDao.getAll()
     }
 
-    private fun loadUsers() {
+    private fun loadData() {
         insertUser(User(0,"cesar mejia", "cmejia@gmail.com", "1234"))
         insertUser(User(1,"octavio", "octavio@yahoo.com", "1234"))
         insertUser(User(2,"jose luis mejia", "joseluis@outlook.com", "1234"))

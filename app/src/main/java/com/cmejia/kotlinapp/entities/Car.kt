@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Car(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val carId : Int,
+    var carId : Int,
 
     @ColumnInfo(name = "brand")
     val brand : String,
@@ -20,7 +20,7 @@ data class Car(
     val year : Int,
 
     @ColumnInfo(name = "image_id")
-    val imageId : Int? = 0,
+    val imageId : Int? = null,
 
     @ColumnInfo(name = "description")
     val description : String = ""

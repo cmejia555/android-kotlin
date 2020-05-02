@@ -7,7 +7,7 @@ import com.cmejia.kotlinapp.entities.User
 @Dao
 interface UserDao {
 
-    @Query("SELECT * from users_table ORDER BY id ASC")
+    @Query("SELECT * FROM users_table ORDER BY id ASC")
     fun getAll() : LiveData<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
