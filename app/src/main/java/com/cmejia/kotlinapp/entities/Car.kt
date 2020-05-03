@@ -1,10 +1,27 @@
 package com.cmejia.kotlinapp.entities
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "cars_table")
 data class Car(
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    var carId : Int,
+
+    @ColumnInfo(name = "brand")
     val brand : String,
+
+    @ColumnInfo(name = "model")
     val model : String,
+
+    @ColumnInfo(name = "year")
     val year : Int,
-    val type : String = "",
-    val imageId : Int? = 0,
+
+    @ColumnInfo(name = "image_id")
+    val imageId : Int? = null,
+
+    @ColumnInfo(name = "description")
     val description : String = ""
 )

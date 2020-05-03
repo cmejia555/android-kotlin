@@ -1,6 +1,7 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
@@ -23,7 +25,7 @@ class SignUpFragment : Fragment() {
     private val viewModel : UserViewModel by activityViewModels()
 
     private lateinit var v : View
-    private lateinit var fullNameEditText: EditText
+    private lateinit var userName: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var registerButton: Button
@@ -33,14 +35,13 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_sign_up, container, false)
-
         return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fullNameEditText = view.findViewById(R.id.full_name_et)
+        userName = view.findViewById(R.id.user_name_et)
         emailEditText = view.findViewById(R.id.sign_up_email_et)
         passwordEditText = view.findViewById(R.id.sign_up_password_et)
         registerButton = view.findViewById(R.id.register_btn)
@@ -55,14 +56,14 @@ class SignUpFragment : Fragment() {
         super.onStart()
 
         registerButton.setOnClickListener {
-            val fullName = fullNameEditText.text.toString() 
+            val userName = userName.text.toString()
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+            if (userName.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
                 if (!isUserRegistered(email)) {
-                    val newUser = User(fullName, email, password)
-                    viewModel.addUser(newUser)
+                    val newUser = User(userName = userName, email = email, password = password)
+                    viewModel.insertUser(newUser)
                     val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
                     it.findNavController().navigate(action)
                 } else {
@@ -73,14 +74,9 @@ class SignUpFragment : Fragment() {
                 Snackbar.make(it, "Please complete all fields", Snackbar.LENGTH_SHORT).show()
             }
         }
+
     }
 
-    private fun isUserRegistered(byEmail : String) : Boolean {
-        val users = viewModel.getUsers().value!!
-        for(user in users) {
-            if (user.email == byEmail) return true
-        }
-        return false
-    }
+    private fun isUserRegistered(byEmail : String) = viewModel.getUser(byEmail) != null
 
 }

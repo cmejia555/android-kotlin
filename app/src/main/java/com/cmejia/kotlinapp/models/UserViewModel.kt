@@ -1,33 +1,47 @@
 package com.cmejia.kotlinapp.models
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.cmejia.kotlinapp.database.LocalDataBase
+import com.cmejia.kotlinapp.database.UserDao
 import com.cmejia.kotlinapp.entities.User
 
-class UserViewModel : ViewModel() {
 
-    private var usersAsList : MutableList<User> = ArrayList()
-    private var users : MutableLiveData<List<User>> = MutableLiveData<List<User>>()
+class UserViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var allUsers : LiveData<List<User>>
+    private var userDao : UserDao
+    private var newUserId : Int = 0
 
     init {
-        users.value = loadUsers()
+        userDao = LocalDataBase.getInstance(application, viewModelScope).userDao()
+        loadData()
+        allUsers = userDao.getAll()
     }
 
-    private fun loadUsers() : List<User> {
-        usersAsList.add(User("cesar mejia", "cmejia@gmail.com", "1234"))
-        usersAsList.add(User("octavio", "octavio@yahoo.com", "1234"))
-        usersAsList.add(User("jose luis mejia", "joseluis@outlook.com", "1234"))
-
-        return usersAsList
+    private fun loadData() {
+        insertUser(User(0,"cesar mejia", "cmejia@gmail.com", "1234"))
+        insertUser(User(1,"octavio", "octavio@yahoo.com", "1234"))
+        insertUser(User(2,"jose luis mejia", "joseluis@outlook.com", "1234"))
     }
 
-    fun getUsers(): LiveData<List<User>> {
-        return users
+    fun getAllUsers() : LiveData<List<User>> {
+        return allUsers
     }
 
-    fun addUser(user : User) {
-        usersAsList.add(user)
-        users.value = usersAsList
+    fun insertUser(user : User) {
+        user.userId = newUserId
+        userDao.insert(user)
+        newUserId++
+    }
+
+    fun getUser(byEmail : String) : User? {
+        return userDao.get(byEmail)
+    }
+
+    fun getUser(id : Int) : User? {
+        return userDao.get(id)
     }
 }

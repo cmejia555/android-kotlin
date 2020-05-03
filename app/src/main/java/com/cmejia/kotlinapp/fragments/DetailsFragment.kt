@@ -18,12 +18,12 @@ import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
 
-    lateinit var v : View
-    lateinit var carImage : ImageView
-    lateinit var carBrand : TextView
-    lateinit var carModel : TextView
-    lateinit var carYear : TextView
-    lateinit var carDescription : TextView
+    private lateinit var v : View
+    private lateinit var carImage : ImageView
+    private lateinit var carBrand : TextView
+    private lateinit var carModel : TextView
+    private lateinit var carYear : TextView
+    private lateinit var carDescription : TextView
 
     lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
@@ -33,7 +33,6 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_details, container, false)
-
         return v
     }
 
