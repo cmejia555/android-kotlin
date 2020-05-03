@@ -59,8 +59,8 @@ class ListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        carViewModel.getAllCars().observe(viewLifecycleOwner, Observer {
-            viewAdapter.carList = it
+        carViewModel.getAllCars().observe(viewLifecycleOwner, Observer { list ->
+            viewAdapter.carList = list
         })
     }
 

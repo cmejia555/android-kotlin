@@ -3,9 +3,11 @@ package com.cmejia.kotlinapp.models
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.cmejia.kotlinapp.database.LocalDataBase
 import com.cmejia.kotlinapp.database.UserDao
 import com.cmejia.kotlinapp.entities.User
+
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -14,7 +16,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private var newUserId : Int = 0
 
     init {
-        userDao = LocalDataBase.getInstance(application).userDao()
+        userDao = LocalDataBase.getInstance(application, viewModelScope).userDao()
         loadData()
         allUsers = userDao.getAll()
     }

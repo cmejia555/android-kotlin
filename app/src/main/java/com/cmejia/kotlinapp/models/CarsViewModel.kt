@@ -3,6 +3,7 @@ package com.cmejia.kotlinapp.models
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.CarDao
 import com.cmejia.kotlinapp.database.LocalDataBase
@@ -16,7 +17,7 @@ class CarsViewModel(application: Application) : AndroidViewModel(application) {
     private var newCarId : Int = 0
 
     init {
-        carDao = LocalDataBase.getInstance(application).carDao()
+        carDao = LocalDataBase.getInstance(application, viewModelScope).carDao()
         loadData()
         allCars = carDao.getAll()
     }

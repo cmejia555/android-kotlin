@@ -52,13 +52,6 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
-            Log.d("DEBUG", "ESTOY EN SIGN UP ${it.size}")
-        })
-    }
-
     override fun onStart() {
         super.onStart()
 

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="@string/full_name_edit_text"
+        android:hint="@string/user_name_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/sign_up_email_et"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.493"
