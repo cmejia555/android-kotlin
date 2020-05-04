@@ -43,7 +43,6 @@ class ListFragment : Fragment() {
             carViewModel.itemSelected.value = position
             view.findNavController().navigate(
                 ListFragmentDirections.actionListFragmentToCollectionFragment()
-                //ListFragmentDirections.actionListFragmentToDetailsFragment(position)
             )
         }
 

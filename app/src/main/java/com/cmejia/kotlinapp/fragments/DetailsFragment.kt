@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
@@ -57,7 +56,7 @@ class DetailsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         carsViewModel.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
-            updateUi(itemId)
+            updateUI(itemId)
         })
     }
 
@@ -66,13 +65,7 @@ class DetailsFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onStart() {
-        super.onStart()
-        //val position = DetailsFragmentArgs.fromBundle(requireArguments()).position
-        //updateUi(position)
-    }
-
-    private fun updateUi(position : Int) {
+    private fun updateUI(position : Int) {
         car = carsViewModel.getCar(position)!!
 
         carImage.setImageResource(car.imageId!!)
@@ -94,7 +87,7 @@ class DetailsFragment : Fragment() {
                 Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
                 carsViewModel.deleteCar(car)
                 findNavController().popBackStack(R.id.listFragment, false)
-                //v.findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment())
+                //findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment()) // id/action_detailsFragment_to_listFragment is unknown to this NavController
             }
         }
         return super.onOptionsItemSelected(item)
