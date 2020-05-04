@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
@@ -51,6 +54,13 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        carsViewModel.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
+            updateUi(itemId)
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -58,8 +68,8 @@ class DetailsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val position = DetailsFragmentArgs.fromBundle(requireArguments()).position
-        updateUi(position)
+        //val position = DetailsFragmentArgs.fromBundle(requireArguments()).position
+        //updateUi(position)
     }
 
     private fun updateUi(position : Int) {
@@ -83,7 +93,8 @@ class DetailsFragment : Fragment() {
             R.id.action_delete -> {
                 Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
                 carsViewModel.deleteCar(car)
-                v.findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment())
+                findNavController().popBackStack(R.id.listFragment, false)
+                //v.findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment())
             }
         }
         return super.onOptionsItemSelected(item)
