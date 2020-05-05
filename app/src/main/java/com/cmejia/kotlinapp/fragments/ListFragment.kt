@@ -52,10 +52,10 @@ class ListFragment : Fragment() {
             adapter = viewAdapter
         }
 
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
+        /*val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
             view.findNavController().navigateUp()
-        }
+        }*/
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

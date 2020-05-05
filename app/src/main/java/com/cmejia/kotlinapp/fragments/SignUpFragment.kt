@@ -46,10 +46,10 @@ class SignUpFragment : Fragment() {
         passwordEditText = view.findViewById(R.id.sign_up_password_et)
         registerButton = view.findViewById(R.id.register_btn)
 
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
+        /*val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
             view.findNavController().navigateUp()
-        }
+        }*/
     }
 
     override fun onStart() {
