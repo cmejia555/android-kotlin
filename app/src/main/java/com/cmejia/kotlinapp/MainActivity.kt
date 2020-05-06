@@ -2,6 +2,7 @@ package com.cmejia.kotlinapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,8 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        //setSupportActionBar(toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         //val navController = findNavController(R.id.main_navhost)
         //val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment))
         //toolbar.setupWithNavController(navController, appBarConfiguration)

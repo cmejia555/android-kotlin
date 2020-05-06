@@ -51,7 +51,6 @@ class LoginFragment : Fragment() {
         signUpTextView = view.findViewById(R.id.sign_up_tv)
 
         val toolbar : Toolbar = requireActivity().findViewById(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         val navController = view.findNavController()
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment))
         toolbar.setupWithNavController(navController, appBarConfiguration)
