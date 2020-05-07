@@ -64,7 +64,6 @@ class DetailsFragment : Fragment() {
                 true
             }
         }
-
         carsViewModel.setAction(0)
     }
 
