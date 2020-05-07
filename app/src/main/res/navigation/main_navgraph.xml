@@ -37,28 +37,30 @@
             android:id="@+id/action_listFragment_to_collectionFragment"
             app:destination="@id/collectionFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.cmejia.kotlinapp.fragments.DetailsFragment"
-        android:label="Details"
-        tools:layout="@layout/fragment_details" >
-        <argument
-            android:name="position"
-            app:argType="integer" />
-    </fragment>
+
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.cmejia.kotlinapp.fragments.SplashScreenFragment"
-        android:label="fragment_splash_screen"
+        android:label="SplashScreen"
         tools:layout="@layout/fragment_splash_screen" />
     <fragment
         android:id="@+id/collectionFragment"
         android:name="com.cmejia.kotlinapp.fragments.CollectionFragment"
-        android:label="fragment_collection"
+        android:label="Collection"
         tools:layout="@layout/fragment_collection" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.cmejia.kotlinapp.fragments.DetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_details" />
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.cmejia.kotlinapp.fragments.MapFragment"
-        android:label="fragment_map"
+        android:label="Map"
         tools:layout="@layout/fragment_map" />
+    <dialog
+        android:id="@+id/dialogFragment"
+        android:name="com.cmejia.kotlinapp.dialogs.DialogFragment"
+        android:label="Dialog"
+        tools:layout="@layout/fragment_dialog" />
 </navigation>

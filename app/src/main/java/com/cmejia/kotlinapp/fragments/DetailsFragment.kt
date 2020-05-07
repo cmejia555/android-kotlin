@@ -1,6 +1,7 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
@@ -54,21 +56,31 @@ class DetailsFragment : Fragment() {
                 when(it.itemId) {
                     R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
                     R.id.action_delete -> {
-                        Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
-                        carsViewModel.deleteCar(car)
-                        view.findNavController().popBackStack(R.id.listFragment, false)
+                        view.findNavController().navigate(R.id.dialogFragment
+                            //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()
+                        )
                     }
                 }
                 true
             }
         }
 
+        carsViewModel.setAction(0)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         carsViewModel.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
             updateUI(itemId)
+        })
+
+        carsViewModel.actionStatus.observe(viewLifecycleOwner, Observer { action ->
+            Log.d("DEBUGGG", "ESTOY EN EL DETAILS DATO = $action")
+            if (action == 1) {
+                Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
+                carsViewModel.deleteCar(car)
+                findNavController().popBackStack(R.id.listFragment, false)
+            }
         })
     }
 
