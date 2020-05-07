@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
@@ -47,10 +45,24 @@ class DetailsFragment : Fragment() {
         carYear = view.findViewById(R.id.car_year)
         carDescription = view.findViewById(R.id.car_description)
 
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            view.findNavController().navigateUp()
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
+            inflateMenu(R.menu.details_toolbar)
+            setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
+                    R.id.action_delete -> {
+                        Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
+                        carsViewModel.deleteCar(car)
+                        view.findNavController().popBackStack(R.id.listFragment, false)
+                    }
+                }
+                true
+            }
         }
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,9 +72,13 @@ class DetailsFragment : Fragment() {
         })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
+            if (!menu.hasVisibleItems()) {
+                inflateMenu(R.menu.details_toolbar)
+            }
+        }
     }
 
     private fun updateUI(position : Int) {
@@ -73,24 +89,6 @@ class DetailsFragment : Fragment() {
         carModel.text = getString(R.string.car_model, car.model)
         carYear.text = getString(R.string.car_year, car.year)
         carDescription.text = getString(R.string.car_description, car.description)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.details_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
-            R.id.action_delete -> {
-                Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
-                carsViewModel.deleteCar(car)
-                findNavController().popBackStack(R.id.listFragment, false)
-                //findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment()) // id/action_detailsFragment_to_listFragment is unknown to this NavController
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -52,9 +52,17 @@ class ListFragment : Fragment() {
             adapter = viewAdapter
         }
 
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            view.findNavController().navigateUp()
+        (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar).apply {
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
+            inflateMenu(R.menu.main_toolbar)
+            setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
+                }
+                true
+            }
         }
     }
 
@@ -65,11 +73,6 @@ class ListFragment : Fragment() {
         })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
@@ -77,15 +80,4 @@ class ListFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

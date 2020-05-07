@@ -1,17 +1,13 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 
 import com.cmejia.kotlinapp.R
@@ -45,11 +41,6 @@ class SignUpFragment : Fragment() {
         emailEditText = view.findViewById(R.id.sign_up_email_et)
         passwordEditText = view.findViewById(R.id.sign_up_password_et)
         registerButton = view.findViewById(R.id.register_btn)
-
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            view.findNavController().navigateUp()
-        }
     }
 
     override fun onStart() {

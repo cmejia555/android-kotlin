@@ -57,7 +57,7 @@
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection" />
     <fragment
-        android:id="@+id/mapFragment2"
+        android:id="@+id/mapFragment"
         android:name="com.cmejia.kotlinapp.fragments.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />

@@ -7,9 +7,14 @@ import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.LocalDataBase
@@ -44,6 +49,12 @@ class LoginFragment : Fragment() {
         passwordEditText = view.findViewById(R.id.login_password_et)
         loginButton = view.findViewById(R.id.login_btn)
         signUpTextView = view.findViewById(R.id.sign_up_tv)
+
+        val toolbar : Toolbar = requireActivity().findViewById(R.id.toolbar)
+        val navController = view.findNavController()
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment))
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        (activity as AppCompatActivity).setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
