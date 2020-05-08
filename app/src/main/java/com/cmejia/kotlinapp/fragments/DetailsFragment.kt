@@ -1,7 +1,6 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
+import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -29,6 +29,7 @@ class DetailsFragment : Fragment() {
 
     lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
+    private val detailsViewModels : DetailsViewModels by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,19 +65,17 @@ class DetailsFragment : Fragment() {
                 true
             }
         }
-        carsViewModel.setAction(0)
+        detailsViewModels.setAction(DetailsViewModels.DialogState.UNPRESSED)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        carsViewModel.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
+        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
             updateUI(itemId)
         })
 
-        carsViewModel.actionStatus.observe(viewLifecycleOwner, Observer { action ->
-            Log.d("DEBUGGG", "ESTOY EN EL DETAILS DATO = $action")
-            if (action == 1) {
-                Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
+        detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
+            if (action == DetailsViewModels.DialogState.DELETE_ITEM) {
                 carsViewModel.deleteCar(car)
                 findNavController().popBackStack(R.id.listFragment, false)
             }
