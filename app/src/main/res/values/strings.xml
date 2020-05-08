@@ -31,5 +31,6 @@
     <!-- Dialog Fragment -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_title">¿Esta seguro que desea eliminar el item?</string>
+    <string name="splash_description">Welcome image</string>
 
 </resources>
