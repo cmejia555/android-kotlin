@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KotlinApp</string>
+    <string name="app_name">Cars</string>
 
     <!-- Login Fragment -->
     <string name="login_title_text_view">Sign In</string>
@@ -28,7 +28,11 @@
     <string name="menu_delete">Delete</string>
     <string name="menu_search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Dialog Fragment -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialog_title">¿Esta seguro que desea eliminar el item?</string>
+
+    <!-- Splash Screen Activity -->
+    <string name="splash_description">Welcome image</string>
 
 </resources>

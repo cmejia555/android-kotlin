@@ -3,7 +3,6 @@ package com.cmejia.kotlinapp.models
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.CarDao
@@ -14,12 +13,10 @@ import com.cmejia.kotlinapp.entities.Car
 class CarsViewModel(application: Application) : AndroidViewModel(application) {
 
     private var allCars : LiveData<List<Car>>
-    var itemSelected : MutableLiveData<Int>
     private val carDao : CarDao
     private var newCarId : Int = 0
 
     init {
-        itemSelected = MutableLiveData()
         carDao = LocalDataBase.getInstance(application, viewModelScope).carDao()
         loadData()
         allCars = carDao.getAll()
@@ -48,4 +45,5 @@ class CarsViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteCar(car: Car) {
         carDao.delete(car)
     }
+
 }

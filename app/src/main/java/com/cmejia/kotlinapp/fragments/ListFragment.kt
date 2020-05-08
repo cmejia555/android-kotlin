@@ -15,6 +15,7 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
+import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class ListFragment : Fragment() {
 
     private val carViewModel : CarsViewModel by activityViewModels()
+    private val detailsViewModels : DetailsViewModels by activityViewModels()
 
     private lateinit var addFloatingButton : FloatingActionButton
     private lateinit var recyclerView : RecyclerView
@@ -40,7 +42,7 @@ class ListFragment : Fragment() {
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
         viewAdapter = RecyclerViewAdapter { position : Int ->
-            carViewModel.itemSelected.value = position
+            detailsViewModels.itemSelected.value = position
             view.findNavController().navigate(
                 ListFragmentDirections.actionListFragmentToCollectionFragment()
             )

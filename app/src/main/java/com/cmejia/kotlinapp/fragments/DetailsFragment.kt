@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
+import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -27,6 +29,7 @@ class DetailsFragment : Fragment() {
 
     lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
+    private val detailsViewModels : DetailsViewModels by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,21 +57,28 @@ class DetailsFragment : Fragment() {
                 when(it.itemId) {
                     R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
                     R.id.action_delete -> {
-                        Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
-                        carsViewModel.deleteCar(car)
-                        view.findNavController().popBackStack(R.id.listFragment, false)
+                        view.findNavController().navigate(R.id.dialogFragment
+                            //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()
+                        )
                     }
                 }
                 true
             }
         }
-
+        detailsViewModels.setAction(DetailsViewModels.DialogState.UNPRESSED)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        carsViewModel.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
+        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
             updateUI(itemId)
+        })
+
+        detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
+            if (action == DetailsViewModels.DialogState.DELETE_ITEM) {
+                carsViewModel.deleteCar(car)
+                findNavController().popBackStack(R.id.listFragment, false)
+            }
         })
     }
 
