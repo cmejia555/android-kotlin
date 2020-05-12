@@ -57,7 +57,6 @@ class DetailsFragment : Fragment() {
                 when(it.itemId) {
                     R.id.action_edit -> {
                         view.findNavController().navigate(R.id.editDialogFragment)
-                        Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
                     }
                     R.id.action_delete -> {
                         view.findNavController().navigate(R.id.dialogFragment
