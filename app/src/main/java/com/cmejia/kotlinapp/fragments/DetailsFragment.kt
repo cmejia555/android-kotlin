@@ -55,7 +55,10 @@ class DetailsFragment : Fragment() {
             inflateMenu(R.menu.details_toolbar)
             setOnMenuItemClickListener {
                 when(it.itemId) {
-                    R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
+                    R.id.action_edit -> {
+                        view.findNavController().navigate(R.id.editDialogFragment)
+                        Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
+                    }
                     R.id.action_delete -> {
                         view.findNavController().navigate(R.id.dialogFragment
                             //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()

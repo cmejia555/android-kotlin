@@ -73,4 +73,9 @@
         android:name="com.cmejia.kotlinapp.dialogs.DialogFragment"
         android:label="Dialog"
         tools:layout="@layout/fragment_dialog" />
+    <dialog
+        android:id="@+id/editDialogFragment"
+        android:name="com.cmejia.kotlinapp.dialogs.EditDialogFragment"
+        android:label="Edit Dialog"
+        tools:layout="@layout/fragment_edit_dialog" />
 </navigation>

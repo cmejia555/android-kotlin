@@ -34,5 +34,13 @@
 
     <!-- Splash Screen Activity -->
     <string name="splash_description">Welcome image</string>
+    <string name="brand_dialog_text">Escribe la marca</string>
+    <string name="brand_dialog_input">%1$s</string>
+    <string name="model_dialog_text">Escribe el modelo</string>
+    <string name="model_dialog_input">%1$s</string>
+    <string name="year_dialog_text">Escribe el año</string>
+    <string name="year_dialog_input">%1$d</string>
+    <string name="description_dialog_text">Escribe la descripcion</string>
+    <string name="description_dialog_input">%1$s</string>
 
 </resources>

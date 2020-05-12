@@ -11,17 +11,17 @@ data class Car(
     var carId : Int,
 
     @ColumnInfo(name = "brand")
-    val brand : String,
+    var brand : String,
 
     @ColumnInfo(name = "model")
-    val model : String,
+    var model : String,
 
     @ColumnInfo(name = "year")
-    val year : Int,
+    var year : Int,
 
     @ColumnInfo(name = "image_id")
-    val imageId : Int? = null,
+    var imageId : Int? = null,
 
     @ColumnInfo(name = "description")
-    val description : String = ""
+    var description : String = ""
 )

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="4dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="12dp"
+    tools:context=".dialogs.EditDialogFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_dark_background"
+        tools:ignore="PrivateResource">
+
+        <TextView
+            android:id="@+id/brand_dialog_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/brand_dialog_text"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/brand_dialog_input"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/brand_dialog_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/brand_dialog_input"
+            app:layout_constraintBottom_toTopOf="@+id/model_dialog_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/brand_dialog_text" />
+
+        <TextView
+            android:id="@+id/model_dialog_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/model_dialog_text"
+            app:layout_constraintBottom_toTopOf="@+id/model_dialog_input"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/brand_dialog_input" />
+
+        <EditText
+            android:id="@+id/model_dialog_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/model_dialog_input"
+            app:layout_constraintBottom_toTopOf="@+id/year_dialog_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/model_dialog_text" />
+
+        <TextView
+            android:id="@+id/year_dialog_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/year_dialog_text"
+            app:layout_constraintBottom_toTopOf="@+id/year_dialog_input"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/model_dialog_input" />
+
+        <EditText
+            android:id="@+id/year_dialog_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@string/year_dialog_input"
+            app:layout_constraintBottom_toTopOf="@+id/description_dialog_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/year_dialog_text" />
+
+        <TextView
+            android:id="@+id/description_dialog_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/description_dialog_text"
+            app:layout_constraintBottom_toTopOf="@+id/description_dialog_input"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/year_dialog_input" />
+
+        <EditText
+            android:id="@+id/description_dialog_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:text="@string/description_dialog_input"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_cancel_button"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/description_dialog_text" />
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/dialog_cancel_button"
+            class="com.github.nikartm.button.FitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:padding="8dp"
+            app:fb_backgroundColor="@android:color/transparent"
+            app:fb_borderColor="@android:color/white"
+            app:fb_borderWidth="1dp"
+            app:fb_cornerRadius="8dp"
+            app:fb_rippleColor="#FFFFFF"
+            app:fb_shape="rectangle"
+            app:fb_text="cancelar"
+            app:fb_textColor="@android:color/white"
+            app:fb_textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_save_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_dialog_input" />
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/dialog_save_btn"
+            class="com.github.nikartm.button.FitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:padding="8dp"
+            app:fb_backgroundColor="@android:color/transparent"
+            app:fb_borderColor="@android:color/white"
+            app:fb_borderWidth="1dp"
+            app:fb_cornerRadius="8dp"
+            app:fb_rippleColor="#FFFFFF"
+            app:fb_shape="rectangle"
+            app:fb_text="guardar"
+            app:fb_textColor="@android:color/white"
+            app:fb_textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dialog_cancel_button"
+            app:layout_constraintTop_toBottomOf="@+id/description_dialog_input" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

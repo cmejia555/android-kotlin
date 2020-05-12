@@ -46,4 +46,8 @@ class CarsViewModel(application: Application) : AndroidViewModel(application) {
         carDao.delete(car)
     }
 
+    fun updateCar(car : Car) {
+        carDao.update(car)
+    }
+
 }
