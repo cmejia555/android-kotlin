@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -83,7 +82,7 @@ class EditDialogFragment : DialogFragment() {
 
     }
 
-    private fun showItemData(position : Int) {
+    private fun showItemData(position : Long) {
         car = carsViewModel.getCar(position)!!
         brandEditText.setText(getString(R.string.brand_dialog_input, car.brand))
         modelEditText.setText(getString(R.string.model_dialog_input, car.model))

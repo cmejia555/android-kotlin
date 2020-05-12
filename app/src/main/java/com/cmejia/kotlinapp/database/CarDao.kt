@@ -20,5 +20,5 @@ interface CarDao {
     fun delete(car: Car)
 
     @Query("SELECT * FROM cars_table WHERE id = :id")
-    fun get(id : Int) : Car?
+    fun get(id : Long) : Car?
 }

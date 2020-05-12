@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Car(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var carId : Int,
+    var carId : Long = -1,
 
     @ColumnInfo(name = "brand")
     var brand : String,

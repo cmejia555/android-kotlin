@@ -15,7 +15,6 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
-import com.google.android.material.snackbar.Snackbar
 
 
 class DetailsFragment : Fragment() {
@@ -93,7 +92,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun updateUI(position : Int) {
+    private fun updateUI(position : Long) {
         car = carsViewModel.getCar(position)!!
 
         carImage.setImageResource(car.imageId!!)
