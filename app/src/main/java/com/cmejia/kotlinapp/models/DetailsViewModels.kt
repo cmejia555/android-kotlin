@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class DetailsViewModels : ViewModel() {
-    var itemSelected : MutableLiveData<Int> = MutableLiveData()
+    var itemSelected : MutableLiveData<Long> = MutableLiveData()
     var actionStatus : MutableLiveData<DialogState>
 
     enum class DialogState {

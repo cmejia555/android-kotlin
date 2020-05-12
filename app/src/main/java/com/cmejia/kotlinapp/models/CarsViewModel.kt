@@ -14,7 +14,6 @@ class CarsViewModel(application: Application) : AndroidViewModel(application) {
 
     private var allCars : LiveData<List<Car>>
     private val carDao : CarDao
-    private var newCarId : Int = 0
 
     init {
         carDao = LocalDataBase.getInstance(application, viewModelScope).carDao()
@@ -32,18 +31,25 @@ class CarsViewModel(application: Application) : AndroidViewModel(application) {
         return allCars
     }
 
-    fun getCar(index : Int) : Car? {
+    fun getCar(index : Long) : Car? {
         return carDao.get(index)
     }
 
     fun insertCar(car : Car) {
-        car.carId = newCarId
+        car.apply {
+            if (carId == -1L) {
+                carId = System.currentTimeMillis()
+            }
+        }
         carDao.insert(car)
-        newCarId++
     }
 
     fun deleteCar(car: Car) {
         carDao.delete(car)
+    }
+
+    fun updateCar(car : Car) {
+        carDao.update(car)
     }
 
 }

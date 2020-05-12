@@ -15,7 +15,6 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
-import com.google.android.material.snackbar.Snackbar
 
 
 class DetailsFragment : Fragment() {
@@ -55,7 +54,9 @@ class DetailsFragment : Fragment() {
             inflateMenu(R.menu.details_toolbar)
             setOnMenuItemClickListener {
                 when(it.itemId) {
-                    R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
+                    R.id.action_edit -> {
+                        view.findNavController().navigate(R.id.editDialogFragment)
+                    }
                     R.id.action_delete -> {
                         view.findNavController().navigate(R.id.dialogFragment
                             //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()
@@ -91,7 +92,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun updateUI(position : Int) {
+    private fun updateUI(position : Long) {
         car = carsViewModel.getCar(position)!!
 
         carImage.setImageResource(car.imageId!!)

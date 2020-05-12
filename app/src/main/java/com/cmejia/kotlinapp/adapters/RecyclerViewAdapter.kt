@@ -11,7 +11,7 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 
 
-class RecyclerViewAdapter(val adapterOnClick : (item: Int) -> Unit) :
+class RecyclerViewAdapter(val adapterOnClick : (item: Long) -> Unit) :
                     RecyclerView.Adapter<RecyclerViewAdapter.CarViewHolder>() {
 
     var carList : List<Car> = emptyList()
