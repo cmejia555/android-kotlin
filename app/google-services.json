@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "42032476569",
+    "firebase_url": "https://cars-555.firebaseio.com",
+    "project_id": "cars-555",
+    "storage_bucket": "cars-555.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42032476569:android:59d06259e852ff8f68e308",
+        "android_client_info": {
+          "package_name": "com.cmejia.cars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "42032476569-v3rm8ufb59mshbehbsu1c7s68nkcr4uj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa5HgeYL4M0K1C4GNIhrhSwoEaoFMMvQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42032476569-v3rm8ufb59mshbehbsu1c7s68nkcr4uj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
