@@ -81,4 +81,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx:19.1.1' // Firebase Cloud Storage
     implementation 'com.firebaseui:firebase-ui-storage:4.3.1' // Firebase Storage UI
 
+    implementation 'com.synnapps:carouselview:0.1.4'
+
+
 }
