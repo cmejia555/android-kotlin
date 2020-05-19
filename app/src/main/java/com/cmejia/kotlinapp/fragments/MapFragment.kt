@@ -22,7 +22,7 @@ class MapFragment : Fragment() {
     private lateinit var carouselView: CarouselView
     var images = arrayOf(
         "",
-        "gs://cars-555.appspot.com/gol_trend.png"
+        "gs://cars-555.appspot.com/default.jpg"
     )
 
     private val detailsViewModels : DetailsViewModels by activityViewModels()
@@ -40,7 +40,6 @@ class MapFragment : Fragment() {
         carouselView = view.findViewById(R.id.carousel)
         carouselView.pageCount = images.size
         //carouselView.setImageListener(imageListener)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -50,8 +49,9 @@ class MapFragment : Fragment() {
             carouselView.setImageListener { position, imageView ->
                 if (item.imageUrl.isNotEmpty()) {
                     val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(images[position])
-                    Glide.with(imageView)
+                    Glide.with(carouselView)
                         .load(reference)
+                        .fitCenter()
                         .placeholder(R.drawable.download_image)
                         .into(imageView)
 

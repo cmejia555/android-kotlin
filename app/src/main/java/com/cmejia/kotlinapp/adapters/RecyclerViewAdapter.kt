@@ -60,6 +60,7 @@ class RecyclerViewAdapter(val adapterOnClick : (item: Car) -> Unit) :
                 val reference : StorageReference = storage.getReferenceFromUrl(value)
                 Glide.with(rootLayout)
                     .load(reference)
+                    .fitCenter()
                     .placeholder(R.drawable.download_image)
                     .error(R.drawable.image_not_available)
                     .into(image)

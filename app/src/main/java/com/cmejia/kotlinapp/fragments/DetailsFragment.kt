@@ -112,6 +112,7 @@ class DetailsFragment : Fragment() {
             val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
             Glide.with(carImage)
                 .load(reference)
+                .circleCrop()
                 .placeholder(R.drawable.download_image)
                 .into(carImage)
 
