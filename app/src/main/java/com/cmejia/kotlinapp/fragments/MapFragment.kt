@@ -39,7 +39,6 @@ class MapFragment : Fragment() {
 
         carouselView = view.findViewById(R.id.carousel)
         carouselView.pageCount = images.size
-        //carouselView.setImageListener(imageListener)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

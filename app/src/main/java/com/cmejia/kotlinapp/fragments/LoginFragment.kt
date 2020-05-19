@@ -94,6 +94,13 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
+            menu.clear()
+        }
+    }
+
     private fun authenticate(email : String, password : String) : Boolean {
         val users = viewModel.getAllUsers().value!!
         for(user in users) {
