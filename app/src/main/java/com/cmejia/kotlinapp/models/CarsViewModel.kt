@@ -17,11 +17,11 @@ class CarsViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         carDao = LocalDataBase.getInstance(application, viewModelScope).carDao()
-        loadData()
+        loadInitData()
         allCars = carDao.getAll()
     }
 
-    private fun loadData() {
+    private fun loadInitData() {
         insertCar(Car(0, "Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva, description = "Se encuentra en excelente estado"))
         insertCar(Car(1, "Peugeot", "206", 2014, imageId = R.drawable.peugeot_206, description = "Listo para manejar, con tan solo 80mil km"))
         insertCar(Car(2, "Ford", "Focus", 2017, imageId = R.drawable.focus, description = "Tiene equipo de GNC y es full"))

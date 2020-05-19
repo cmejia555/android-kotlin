@@ -74,7 +74,11 @@ dependencies {
     def fb_version = "1.2.1"
     implementation "com.github.nikartm:fit-button:$fb_version"
 
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     implementation 'com.google.firebase:firebase-core:17.4.1' // Google core services
     implementation 'com.google.firebase:firebase-storage-ktx:19.1.1' // Firebase Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:4.3.1' // Firebase Storage UI
+
 }

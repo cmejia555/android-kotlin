@@ -10,11 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 
 
 class DetailsFragment : Fragment() {
@@ -29,6 +35,7 @@ class DetailsFragment : Fragment() {
     lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
     private val detailsViewModels : DetailsViewModels by activityViewModels()
+    private lateinit var firebaseStorage : FirebaseStorage
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +74,8 @@ class DetailsFragment : Fragment() {
             }
         }
         detailsViewModels.setAction(DetailsViewModels.DialogState.UNPRESSED)
+
+        firebaseStorage = Firebase.storage("gs://cars-555.appspot.com")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -95,11 +104,21 @@ class DetailsFragment : Fragment() {
     private fun updateUI(position : Long) {
         car = carsViewModel.getCar(position)!!
 
-        carImage.setImageResource(car.imageId!!)
+        loadImage("gs://cars-555.appspot.com/image_not_available.jpg")
+        //carImage.setImageResource(car.imageId!!)
         carBrand.text = getString(R.string.car_brand, car.brand)
         carModel.text = getString(R.string.car_model, car.model)
         carYear.text = getString(R.string.car_year, car.year)
         carDescription.text = getString(R.string.car_description, car.description)
+
+    }
+
+    private fun loadImage(imageUrl : String) {
+        val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+        //val reference : StorageReference = firebaseStorage.getReferenceFromUrl(imageUrl)
+        Glide.with(this)
+            .load(reference)
+            .into(carImage)
     }
 
 }
