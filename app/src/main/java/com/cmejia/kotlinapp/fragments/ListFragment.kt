@@ -41,8 +41,8 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        viewAdapter = RecyclerViewAdapter { id : Long ->
-            detailsViewModels.itemSelected.value = id
+        viewAdapter = RecyclerViewAdapter { car : Car ->
+            detailsViewModels.itemSelected.value = car
             view.findNavController().navigate(
                 ListFragmentDirections.actionListFragmentToCollectionFragment()
             )

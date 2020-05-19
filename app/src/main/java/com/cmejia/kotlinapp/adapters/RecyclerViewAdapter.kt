@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 
 
-class RecyclerViewAdapter(val adapterOnClick : (item: Long) -> Unit) :
+class RecyclerViewAdapter(val adapterOnClick : (item: Car) -> Unit) :
                     RecyclerView.Adapter<RecyclerViewAdapter.CarViewHolder>() {
 
+    private val storage: FirebaseStorage = Firebase.storage
     var carList : List<Car> = emptyList()
         set(value) {
             field = value
@@ -36,7 +39,7 @@ class RecyclerViewAdapter(val adapterOnClick : (item: Long) -> Unit) :
 
         holder.setImage(item.imageUrl)
         holder.rootLayout.setOnClickListener {
-            adapterOnClick(item.carId)
+            adapterOnClick(item)
         }
     }
 
@@ -51,7 +54,6 @@ class RecyclerViewAdapter(val adapterOnClick : (item: Long) -> Unit) :
         val rootLayout : CardView = view.findViewById(R.id.card_layout)
         val modelTextView : TextView = view.findViewById(R.id.item_car_model)
         private val image : ImageView = view.findViewById(R.id.item_car_image)
-        private val storage: FirebaseStorage = FirebaseStorage.getInstance()
 
         fun setImage(value : String) {
             if (value.isNotEmpty()) {

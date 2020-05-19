@@ -51,6 +51,7 @@ class EditDialogFragment : DialogFragment() {
         saveButton = view.findViewById(R.id.dialog_save_btn)
 
         detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer {item ->
+            car = item
             showItemData(item)
         })
     }
@@ -76,14 +77,13 @@ class EditDialogFragment : DialogFragment() {
             car.description = descriptionEditText.text.toString()
 
             carsViewModel.updateCar(car)
-            detailsViewModels.itemSelected.value = car.carId
+            detailsViewModels.itemSelected.value = car
             dismiss()
         }
 
     }
 
-    private fun showItemData(position : Long) {
-        car = carsViewModel.getCar(position)!!
+    private fun showItemData(car : Car) {
         brandEditText.setText(getString(R.string.brand_dialog_input, car.brand))
         modelEditText.setText(getString(R.string.model_dialog_input, car.model))
         yearEditText.setText(getString(R.string.year_dialog_input, car.year))

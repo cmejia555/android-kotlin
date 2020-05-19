@@ -75,8 +75,9 @@ class DetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
-            updateUI(itemId)
+        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { item ->
+            car = item
+            updateUI(item)
         })
 
         detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
@@ -96,9 +97,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun updateUI(position : Long) {
-        car = carsViewModel.getCar(position)!!
-
+    private fun updateUI(car : Car) {
         loadImage(car.imageUrl)
         carBrand.text = getString(R.string.car_brand, car.brand)
         carModel.text = getString(R.string.car_model, car.model)
@@ -109,11 +108,14 @@ class DetailsFragment : Fragment() {
 
     private fun loadImage(imageUrl : String) {
         //firebaseStorage = Firebase.storage("gs://cars-555.appspot.com")
-        val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
-        Glide.with(carImage)
-            .load(reference)
-            .placeholder(R.drawable.download_image)
-            .into(carImage)
+        if (imageUrl.isNotEmpty()) {
+            val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+            Glide.with(carImage)
+                .load(reference)
+                .placeholder(R.drawable.download_image)
+                .into(carImage)
+
+        } else carImage.setImageResource(R.drawable.image_not_available)
     }
 
 }
