@@ -10,6 +10,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@color/colorText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed" />
@@ -19,5 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        app:menu="@menu/menu_bottom_nav"
+        app:itemTextColor="@color/colorText"
+        app:itemIconTint="@color/colorText"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
 
 </LinearLayout>
