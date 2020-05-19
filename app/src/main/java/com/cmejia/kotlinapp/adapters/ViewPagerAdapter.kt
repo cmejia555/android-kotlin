@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cmejia.kotlinapp.fragments.DetailsFragment
-import com.cmejia.kotlinapp.fragments.MapFragment
+import com.cmejia.kotlinapp.fragments.GalleryFragment
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -12,7 +12,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
     override fun createFragment(position: Int): Fragment {
         return when(position) {
             0 -> DetailsFragment()
-            1 -> MapFragment()
+            1 -> GalleryFragment()
             else -> DetailsFragment()
         }
     }

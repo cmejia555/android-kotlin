@@ -64,10 +64,10 @@
         android:label="Details"
         tools:layout="@layout/fragment_details" />
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.cmejia.kotlinapp.fragments.MapFragment"
+        android:id="@+id/galleryFragment"
+        android:name="com.cmejia.kotlinapp.fragments.GalleryFragment"
         android:label="Map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_gallery" />
     <dialog
         android:id="@+id/dialogFragment"
         android:name="com.cmejia.kotlinapp.dialogs.DialogFragment"
