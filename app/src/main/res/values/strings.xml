@@ -5,16 +5,16 @@
     <string name="splash_description">Welcome image</string>
 
     <!-- Login Fragment -->
-    <string name="login_title_text_view">Sign In</string>
+    <string name="login_title_text_view">Bienvenido</string>
     <string name="email_edit_text">Email</string>
     <string name="password_edit_text">Password</string>
-    <string name="login_button">Log in</string>
-    <string name="sign_up_link_text_view">Sign Up</string>
+    <string name="login_button">Ingresar</string>
+    <string name="sign_up_link_text_view">Registrarse</string>
 
     <!-- SignUp Fragment -->
-    <string name="sign_up_title_text_view">Sign Up</string>
+    <string name="sign_up_title_text_view">Ingrese sus datos</string>
     <string name="user_name_edit_text">User name</string>
-    <string name="register_button">Register</string>
+    <string name="register_button">Enviar</string>
 
     <!-- List Item -->
     <string name="car_model">Model: %1$s</string>
@@ -48,5 +48,9 @@
     <string name="year_dialog_input">%1$d</string>
     <string name="description_dialog_text">Escribe la descripcion</string>
     <string name="description_dialog_input">%1$s</string>
+
+    <!-- Tab Names -->
+    <string name="details_tab">Detalles</string>
+    <string name="gallery_tab">Galeria</string>
 
 </resources>

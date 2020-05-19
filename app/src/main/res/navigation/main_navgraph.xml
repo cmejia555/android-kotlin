@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.cmejia.kotlinapp.fragments.ListFragment"
-        android:label="List"
+        android:label="Cars"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_collectionFragment"
@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/collectionFragment"
         android:name="com.cmejia.kotlinapp.fragments.CollectionFragment"
-        android:label="Collection"
+        android:label="Informacion"
         tools:layout="@layout/fragment_collection" />
     <fragment
         android:id="@+id/detailsFragment"

@@ -45,8 +45,8 @@ class CollectionFragment : Fragment() {
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when(position) {
-                0 -> tab.text = "Details"
-                1 -> tab.text = "Gallery"
+                0 -> tab.text = resources.getText(R.string.details_tab)
+                1 -> tab.text = resources.getText(R.string.gallery_tab)
             }
         }.attach()
 
