@@ -19,8 +19,8 @@ data class Car(
     @ColumnInfo(name = "year")
     var year : Int,
 
-    @ColumnInfo(name = "image_id")
-    var imageId : Int? = null,
+    @ColumnInfo(name = "image_url")
+    var imageUrl : String,
 
     @ColumnInfo(name = "description")
     var description : String = ""

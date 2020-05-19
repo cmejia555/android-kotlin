@@ -10,11 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class DetailsFragment : Fragment() {
@@ -67,12 +70,14 @@ class DetailsFragment : Fragment() {
             }
         }
         detailsViewModels.setAction(DetailsViewModels.DialogState.UNPRESSED)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { itemId ->
-            updateUI(itemId)
+        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { item ->
+            car = item
+            updateUI(item)
         })
 
         detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
@@ -92,14 +97,26 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun updateUI(position : Long) {
-        car = carsViewModel.getCar(position)!!
-
-        carImage.setImageResource(car.imageId!!)
+    private fun updateUI(car : Car) {
+        loadImage(car.imageUrl)
         carBrand.text = getString(R.string.car_brand, car.brand)
         carModel.text = getString(R.string.car_model, car.model)
         carYear.text = getString(R.string.car_year, car.year)
         carDescription.text = getString(R.string.car_description, car.description)
+
+    }
+
+    private fun loadImage(imageUrl : String) {
+        //firebaseStorage = Firebase.storage("gs://cars-555.appspot.com")
+        if (imageUrl.isNotEmpty()) {
+            val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+            Glide.with(carImage)
+                .load(reference)
+                .circleCrop()
+                .placeholder(R.drawable.download_image)
+                .into(carImage)
+
+        } else carImage.setImageResource(R.drawable.image_not_available)
     }
 
 }

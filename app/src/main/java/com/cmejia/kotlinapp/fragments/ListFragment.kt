@@ -41,8 +41,8 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        viewAdapter = RecyclerViewAdapter { id : Long ->
-            detailsViewModels.itemSelected.value = id
+        viewAdapter = RecyclerViewAdapter { car : Car ->
+            detailsViewModels.itemSelected.value = car
             view.findNavController().navigate(
                 ListFragmentDirections.actionListFragmentToCollectionFragment()
             )
@@ -78,7 +78,7 @@ class ListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
-            carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageId =  R.drawable.image_not_available))
+            carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  ""))
         }
     }
 
