@@ -6,7 +6,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.entities.User
 import kotlinx.coroutines.CoroutineScope
@@ -59,9 +58,9 @@ abstract class LocalDataBase : RoomDatabase() {
         }
 
         suspend fun loadDatabase(carDao: CarDao) {
-            carDao.insert(Car(0, "Chevrolet", "Meriva", 2010, imageId = R.drawable.meriva))
-            carDao.insert(Car(1, "Peugeot", "206", 2014, imageId = R.drawable.peugeot_206))
-            carDao.insert(Car(2, "Ford", "Focus", 2017, imageId = R.drawable.focus))
+            carDao.insert(Car(0, "Chevrolet", "Meriva", 2010, imageUrl = "gs://cars-555.appspot.com/meriva.png"))
+            carDao.insert(Car(1, "Peugeot", "206", 2014, imageUrl = "gs://cars-555.appspot.com/peugeot_206.png"))
+            carDao.insert(Car(2, "Ford", "Focus", 2017, imageUrl = "gs://cars-555.appspot.com/focus.png"))
         }
     }
 }
