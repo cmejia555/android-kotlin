@@ -12,10 +12,16 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_loginFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            app:destination="@id/listFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -34,26 +40,42 @@
         android:label="List"
         tools:layout="@layout/fragment_list" >
         <action
-            android:id="@+id/action_listFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/action_listFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
+
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.cmejia.kotlinapp.fragments.SplashScreenFragment"
+        android:label="SplashScreen"
+        tools:layout="@layout/fragment_splash_screen" />
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="com.cmejia.kotlinapp.fragments.CollectionFragment"
+        android:label="Collection"
+        tools:layout="@layout/fragment_collection" />
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.cmejia.kotlinapp.fragments.DetailsFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_details" >
-        <argument
-            android:name="position"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_detailsFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:popUpTo="@id/listFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_details" />
     <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="com.cmejia.kotlinapp.fragments.SplashScreenFragment"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" />
+        android:id="@+id/mapFragment"
+        android:name="com.cmejia.kotlinapp.fragments.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map" />
+    <dialog
+        android:id="@+id/dialogFragment"
+        android:name="com.cmejia.kotlinapp.dialogs.DialogFragment"
+        android:label="Dialog"
+        tools:layout="@layout/fragment_dialog" />
+    <dialog
+        android:id="@+id/editDialogFragment"
+        android:name="com.cmejia.kotlinapp.dialogs.EditDialogFragment"
+        android:label="Edit Dialog"
+        tools:layout="@layout/fragment_edit_dialog" />
 </navigation>

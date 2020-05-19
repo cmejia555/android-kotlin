@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
+import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -22,10 +24,11 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class ListFragment : Fragment() {
 
     private val carViewModel : CarsViewModel by activityViewModels()
+    private val detailsViewModels : DetailsViewModels by activityViewModels()
 
     private lateinit var addFloatingButton : FloatingActionButton
     private lateinit var recyclerView : RecyclerView
-    private lateinit var adapter : RecyclerViewAdapter
+    private lateinit var viewAdapter : RecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,45 +41,45 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addFloatingButton = view.findViewById(R.id.add_floating_btn)
-        adapter = RecyclerViewAdapter(carViewModel.getCars()) { position : Int ->
+        viewAdapter = RecyclerViewAdapter { car : Car ->
+            detailsViewModels.itemSelected.value = car
             view.findNavController().navigate(
-                ListFragmentDirections.actionListFragmentToDetailsFragment(position)
+                ListFragmentDirections.actionListFragmentToCollectionFragment()
             )
         }
 
-        recyclerView = view.findViewById(R.id.recyclerview_list)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_list).apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewAdapter
+        }
 
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
-        //(activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar.setNavigationOnClickListener {
-            view.findNavController().navigateUp()
+        (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar).apply {
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
+            inflateMenu(R.menu.main_toolbar)
+            setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
+                }
+                true
+            }
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        carViewModel.getAllCars().observe(viewLifecycleOwner, Observer { list ->
+            viewAdapter.carList = list
+        })
     }
 
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
-            carViewModel.addCar(Car("Empty", "Empty", 0, imageId =  R.drawable.image_not_available))
-            adapter.notifyDataSetChanged()
+            carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  ""))
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

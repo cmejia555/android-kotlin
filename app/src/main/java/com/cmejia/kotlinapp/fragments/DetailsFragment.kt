@@ -4,36 +4,40 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.cmejia.kotlinapp.models.DetailsViewModels
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class DetailsFragment : Fragment() {
 
-    lateinit var v : View
-    lateinit var carImage : ImageView
-    lateinit var carBrand : TextView
-    lateinit var carModel : TextView
-    lateinit var carYear : TextView
-    lateinit var carDescription : TextView
+    private lateinit var v : View
+    private lateinit var carImage : ImageView
+    private lateinit var carBrand : TextView
+    private lateinit var carModel : TextView
+    private lateinit var carYear : TextView
+    private lateinit var carDescription : TextView
 
     lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
+    private val detailsViewModels : DetailsViewModels by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         v = inflater.inflate(R.layout.fragment_details, container, false)
-
         return v
     }
 
@@ -46,48 +50,73 @@ class DetailsFragment : Fragment() {
         carYear = view.findViewById(R.id.car_year)
         carDescription = view.findViewById(R.id.car_description)
 
-        val toolbar: Toolbar = (activity as AppCompatActivity).findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            view.findNavController().navigateUp()
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
+            inflateMenu(R.menu.details_toolbar)
+            setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.action_edit -> {
+                        view.findNavController().navigate(R.id.editDialogFragment)
+                    }
+                    R.id.action_delete -> {
+                        view.findNavController().navigate(R.id.dialogFragment
+                            //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()
+                        )
+                    }
+                }
+                true
+            }
+        }
+        detailsViewModels.setAction(DetailsViewModels.DialogState.UNPRESSED)
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { item ->
+            car = item
+            updateUI(item)
+        })
+
+        detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
+            if (action == DetailsViewModels.DialogState.DELETE_ITEM) {
+                carsViewModel.deleteCar(car)
+                findNavController().popBackStack(R.id.listFragment, false)
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
+            if (!menu.hasVisibleItems()) {
+                inflateMenu(R.menu.details_toolbar)
+            }
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val position = DetailsFragmentArgs.fromBundle(requireArguments()).position
-        updateUi(position)
-    }
-
-    private fun updateUi(position : Int) {
-        car = carsViewModel.getCar(position)!!
-
-        carImage.setImageResource(car.imageId!!)
+    private fun updateUI(car : Car) {
+        loadImage(car.imageUrl)
         carBrand.text = getString(R.string.car_brand, car.brand)
         carModel.text = getString(R.string.car_model, car.model)
         carYear.text = getString(R.string.car_year, car.year)
         carDescription.text = getString(R.string.car_description, car.description)
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.details_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    private fun loadImage(imageUrl : String) {
+        //firebaseStorage = Firebase.storage("gs://cars-555.appspot.com")
+        if (imageUrl.isNotEmpty()) {
+            val reference : StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+            Glide.with(carImage)
+                .load(reference)
+                .circleCrop()
+                .placeholder(R.drawable.download_image)
+                .into(carImage)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.action_edit -> Snackbar.make(v, "Pressed Edit", Snackbar.LENGTH_SHORT).show()
-            R.id.action_delete -> {
-                Snackbar.make(v, "Pressed Delete", Snackbar.LENGTH_SHORT).show()
-                carsViewModel.deleteCar(car)
-                v.findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToListFragment())
-            }
-        }
-        return super.onOptionsItemSelected(item)
+        } else carImage.setImageResource(R.drawable.image_not_available)
     }
 
 }
