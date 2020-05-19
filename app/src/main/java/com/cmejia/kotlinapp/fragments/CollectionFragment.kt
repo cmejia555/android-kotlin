@@ -52,8 +52,8 @@ class CollectionFragment : Fragment() {
 
         checkPermission()
 
-        //val navController = findNavController()
-        //bottomNavigation.setupWithNavController(navController)
+        val navController = findNavController()
+        bottomNavigation.setupWithNavController(navController)
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.menu_phone -> {
