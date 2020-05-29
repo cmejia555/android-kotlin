@@ -66,13 +66,13 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.cmejia.kotlinapp.fragments.GalleryFragment"
-        android:label="Map"
+        android:label="Gallery"
         tools:layout="@layout/fragment_gallery" />
     <dialog
-        android:id="@+id/dialogFragment"
-        android:name="com.cmejia.kotlinapp.dialogs.DialogFragment"
-        android:label="Dialog"
-        tools:layout="@layout/fragment_dialog" />
+        android:id="@+id/deleteDialogFragment"
+        android:name="com.cmejia.kotlinapp.dialogs.DeleteDialogFragment"
+        android:label="Delete Dialog"
+        tools:layout="@layout/fragment_delete_dialog" />
     <dialog
         android:id="@+id/editDialogFragment"
         android:name="com.cmejia.kotlinapp.dialogs.EditDialogFragment"

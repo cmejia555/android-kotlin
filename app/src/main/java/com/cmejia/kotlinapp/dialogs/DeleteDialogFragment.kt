@@ -16,7 +16,7 @@ import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.github.nikartm.button.FitButton
 
 
-class DialogFragment : DialogFragment() {
+class DeleteDialogFragment : DialogFragment() {
 
     lateinit var acceptButton: FitButton
     lateinit var cancelButton: FitButton
@@ -27,7 +27,7 @@ class DialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_dialog, container, false)
+        return inflater.inflate(R.layout.fragment_delete_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
