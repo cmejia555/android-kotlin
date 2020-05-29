@@ -7,7 +7,7 @@
     android:elevation="4dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="12dp"
-    tools:context=".dialogs.DialogFragment" >
+    tools:context=".dialogs.DeleteDialogFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

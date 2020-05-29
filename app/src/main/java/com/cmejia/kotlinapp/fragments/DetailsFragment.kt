@@ -54,14 +54,14 @@ class DetailsFragment : Fragment() {
             if (menu.hasVisibleItems()) {
                 menu.clear()
             }
-            inflateMenu(R.menu.details_toolbar)
+            inflateMenu(R.menu.menu_details_toolbar)
             setOnMenuItemClickListener {
                 when(it.itemId) {
                     R.id.action_edit -> {
                         view.findNavController().navigate(R.id.editDialogFragment)
                     }
                     R.id.action_delete -> {
-                        view.findNavController().navigate(R.id.dialogFragment
+                        view.findNavController().navigate(R.id.deleteDialogFragment
                             //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()
                         )
                     }
@@ -92,7 +92,7 @@ class DetailsFragment : Fragment() {
         super.onResume()
         requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
             if (!menu.hasVisibleItems()) {
-                inflateMenu(R.menu.details_toolbar)
+                inflateMenu(R.menu.menu_details_toolbar)
             }
         }
     }

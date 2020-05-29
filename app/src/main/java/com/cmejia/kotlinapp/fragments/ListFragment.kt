@@ -58,7 +58,7 @@ class ListFragment : Fragment() {
             if (menu.hasVisibleItems()) {
                 menu.clear()
             }
-            inflateMenu(R.menu.main_toolbar)
+            inflateMenu(R.menu.menu_recycler_view_toolbar)
             setOnMenuItemClickListener {
                 when(it.itemId) {
                     R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()

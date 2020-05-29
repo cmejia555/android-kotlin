@@ -17,7 +17,7 @@ import com.google.firebase.storage.StorageReference
 import com.synnapps.carouselview.CarouselView
 
 
-class MapFragment : Fragment() {
+class GalleryFragment : Fragment() {
 
     private lateinit var carouselView: CarouselView
     var images = arrayOf(
@@ -31,7 +31,7 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
