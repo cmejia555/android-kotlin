@@ -1,6 +1,7 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -58,10 +60,11 @@ class ListFragment : Fragment() {
             if (menu.hasVisibleItems()) {
                 menu.clear()
             }
-            inflateMenu(R.menu.menu_recycler_view_toolbar)
+            inflateMenu(R.menu.menu_list_toolbar)
             setOnMenuItemClickListener {
                 when(it.itemId) {
                     R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
+                    R.id.menu_setting -> view.findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingsActivity())
                 }
                 true
             }
@@ -80,6 +83,9 @@ class ListFragment : Fragment() {
         addFloatingButton.setOnClickListener {
             carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  ""))
         }
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        Log.d("DEBUGGG", preferences.getBoolean("edit", false).toString())
     }
 
 }
