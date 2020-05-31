@@ -89,6 +89,7 @@ class LoginFragment : Fragment() {
             it.findNavController().navigate(action)
         }
 
+        fab_database.hide()
         fab_database.setOnClickListener {
             RoomExplorer.show(context, LocalDataBase::class.java, "mydatabase")
         }

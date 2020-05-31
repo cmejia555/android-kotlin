@@ -58,10 +58,11 @@ class ListFragment : Fragment() {
             if (menu.hasVisibleItems()) {
                 menu.clear()
             }
-            inflateMenu(R.menu.main_toolbar)
+            inflateMenu(R.menu.menu_list_toolbar)
             setOnMenuItemClickListener {
                 when(it.itemId) {
                     R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
+                    R.id.menu_setting -> view.findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingsFragment())
                 }
                 true
             }
@@ -79,6 +80,15 @@ class ListFragment : Fragment() {
         super.onStart()
         addFloatingButton.setOnClickListener {
             carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  ""))
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar).apply {
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
         }
     }
 

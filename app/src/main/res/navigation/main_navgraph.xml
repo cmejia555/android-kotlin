@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.cmejia.kotlinapp.fragments.ListFragment"
-        android:label="List"
+        android:label="Cars"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_collectionFragment"
@@ -45,7 +45,12 @@
             app:enterAnim="@anim/fragment_fade_enter"
             app:exitAnim="@anim/fragment_fade_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
-            app:popExitAnim="@anim/fragment_close_exit" />
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_listFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -56,7 +61,7 @@
     <fragment
         android:id="@+id/collectionFragment"
         android:name="com.cmejia.kotlinapp.fragments.CollectionFragment"
-        android:label="Collection"
+        android:label="Informacion"
         tools:layout="@layout/fragment_collection" />
     <fragment
         android:id="@+id/detailsFragment"
@@ -64,18 +69,22 @@
         android:label="Details"
         tools:layout="@layout/fragment_details" />
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.cmejia.kotlinapp.fragments.MapFragment"
-        android:label="Map"
-        tools:layout="@layout/fragment_map" />
+        android:id="@+id/galleryFragment"
+        android:name="com.cmejia.kotlinapp.fragments.GalleryFragment"
+        android:label="Gallery"
+        tools:layout="@layout/fragment_gallery" />
     <dialog
-        android:id="@+id/dialogFragment"
-        android:name="com.cmejia.kotlinapp.dialogs.DialogFragment"
-        android:label="Dialog"
-        tools:layout="@layout/fragment_dialog" />
+        android:id="@+id/deleteDialogFragment"
+        android:name="com.cmejia.kotlinapp.dialogs.DeleteDialogFragment"
+        android:label="Delete Dialog"
+        tools:layout="@layout/fragment_delete_dialog" />
     <dialog
         android:id="@+id/editDialogFragment"
         android:name="com.cmejia.kotlinapp.dialogs.EditDialogFragment"
         android:label="Edit Dialog"
         tools:layout="@layout/fragment_edit_dialog" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.cmejia.kotlinapp.fragments.SettingsFragment"
+        android:label="Settings" />
 </navigation>
