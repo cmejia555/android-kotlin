@@ -10,12 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -56,14 +58,25 @@ class DetailsFragment : Fragment() {
             }
             inflateMenu(R.menu.menu_details_toolbar)
             setOnMenuItemClickListener {
+                val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
                 when(it.itemId) {
                     R.id.action_edit -> {
-                        view.findNavController().navigate(R.id.editDialogFragment)
+                        if (preferences.getBoolean("edit", false)) {
+                            view.findNavController().navigate(R.id.editDialogFragment)
+                        } else {
+                            Snackbar.make(view,
+                                "Debe habilitar los permisos para realizar esta accion",
+                                Snackbar.LENGTH_SHORT).show()
+                        }
                     }
                     R.id.action_delete -> {
-                        view.findNavController().navigate(R.id.deleteDialogFragment
-                            //DetailsFragmentDirections.actionDetailsFragmentToDialogFragment()
-                        )
+                        if (preferences.getBoolean("delete", false)) {
+                            view.findNavController().navigate(R.id.deleteDialogFragment)
+                        } else {
+                            Snackbar.make(view,
+                                "Debe habilitar los permisos para realizar esta accion",
+                                Snackbar.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 true

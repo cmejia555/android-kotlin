@@ -1,0 +1,35 @@
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/screen">
+
+        <EditTextPreference
+            app:key="signature"
+            app:title="@string/signature_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="light"
+            app:entries="@array/screen_mode_entries"
+            app:entryValues="@array/screen_mode_values"
+            app:key="screen_mode"
+            app:title="@string/screen_mode_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/permissions">
+
+        <SwitchPreferenceCompat
+            app:key="edit"
+            app:title="@string/edit_title" />
+
+        <SwitchPreferenceCompat
+            app:dependency="edit"
+            app:key="delete"
+            app:summaryOff="@string/delete_summary_off"
+            app:summaryOn="@string/delete_summary_on"
+            app:title="@string/delete_title" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

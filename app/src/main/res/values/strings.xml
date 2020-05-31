@@ -30,6 +30,7 @@
     <string name="menu_add">Add</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_search">Search</string>
+    <string name="menu_setting">Setting</string>
 
     <!-- Bottom Navigation Menu -->
     <string name="menu_whatsapp">WhatsApp</string>
@@ -52,5 +53,23 @@
     <!-- Tab Names -->
     <string name="details_tab">Detalles</string>
     <string name="gallery_tab">Galeria</string>
+
+    <!-- Setting Activity -->
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="screen">Pantalla</string>
+    <string name="permissions">Permisos</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="screen_mode_title">Tema</string>
+
+    <!-- Sync Preferences -->
+    <string name="edit_title">Habilitar edicion de items</string>
+    <string name="edit_summary_on">Puede editar todos los campos del item</string>
+    <string name="delete_title">Eliminar items</string>
+    <string name="delete_summary_on">Se puede eliminar el item al presionar Aceptar</string>
+    <string name="delete_summary_off">No se puede eliminar los items de la lista</string>
 
 </resources>

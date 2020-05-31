@@ -62,7 +62,9 @@ class GalleryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
-            menu.clear()
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
         }
         carouselView.playCarousel()
     }
