@@ -49,10 +49,8 @@
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="false"/>
         <action
-            android:id="@+id/action_listFragment_to_settingsActivity"
-            app:destination="@id/settingsActivity"
-            app:popUpToInclusive="false"
-            app:popUpTo="@id/listFragment"/>
+            android:id="@+id/action_listFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -85,8 +83,8 @@
         android:name="com.cmejia.kotlinapp.dialogs.EditDialogFragment"
         android:label="Edit Dialog"
         tools:layout="@layout/fragment_edit_dialog" />
-    <activity
-        android:id="@+id/settingsActivity"
-        android:name="com.cmejia.kotlinapp.SettingsActivity"
-        android:label="SettingsActivity" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.cmejia.kotlinapp.fragments.SettingsFragment"
+        android:label="Settings" />
 </navigation>

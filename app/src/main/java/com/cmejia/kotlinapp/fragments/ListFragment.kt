@@ -64,7 +64,7 @@ class ListFragment : Fragment() {
             setOnMenuItemClickListener {
                 when(it.itemId) {
                     R.id.menu_search -> Snackbar.make(list_layout, "Pressed Search", Snackbar.LENGTH_SHORT).show()
-                    R.id.menu_setting -> view.findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingsActivity())
+                    R.id.menu_setting -> view.findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingsFragment())
                 }
                 true
             }
@@ -86,6 +86,16 @@ class ListFragment : Fragment() {
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         Log.d("DEBUGGG", preferences.getBoolean("edit", false).toString())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar).apply {
+            if (menu.hasVisibleItems()) {
+                menu.clear()
+            }
+        }
+
     }
 
 }
