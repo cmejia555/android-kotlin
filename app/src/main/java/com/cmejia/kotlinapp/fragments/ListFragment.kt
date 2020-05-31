@@ -1,7 +1,6 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -83,9 +81,6 @@ class ListFragment : Fragment() {
         addFloatingButton.setOnClickListener {
             carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  ""))
         }
-
-        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        Log.d("DEBUGGG", preferences.getBoolean("edit", false).toString())
     }
 
     override fun onStop() {
@@ -95,7 +90,6 @@ class ListFragment : Fragment() {
                 menu.clear()
             }
         }
-
     }
 
 }
