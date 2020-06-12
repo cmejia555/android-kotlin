@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cmejia.kotlinapp.fragments.DetailsFragment
 import com.cmejia.kotlinapp.fragments.GalleryFragment
+import com.cmejia.kotlinapp.fragments.MapFragment
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -13,6 +14,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
         return when(position) {
             0 -> DetailsFragment()
             1 -> GalleryFragment()
+            2 -> MapFragment()
             else -> DetailsFragment()
         }
     }
@@ -22,7 +24,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
     }
 
     companion object {
-        private const val TAB_LAYOUT_COUNT = 2
+        private const val TAB_LAYOUT_COUNT = 3
     }
 
 }

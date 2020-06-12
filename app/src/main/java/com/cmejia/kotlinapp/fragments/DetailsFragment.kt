@@ -116,7 +116,6 @@ class DetailsFragment : Fragment() {
         carModel.text = getString(R.string.car_model, car.model)
         carYear.text = getString(R.string.car_year, car.year)
         carDescription.text = getString(R.string.car_description, car.description)
-
     }
 
     private fun loadImage(imageUrl : String) {
