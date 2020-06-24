@@ -5,7 +5,16 @@
     android:layout_height="match_parent"
     tools:context="com.cmejia.kotlinapp.fragments.MapFragment">
 
-    <TextView
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<TextView
         android:id="@+id/latitude_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latitude_text" />
+        app:layout_constraintTop_toBottomOf="@+id/latitude_text" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
