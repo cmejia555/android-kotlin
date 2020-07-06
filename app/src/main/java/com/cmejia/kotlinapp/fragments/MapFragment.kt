@@ -14,21 +14,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 import com.cmejia.kotlinapp.R
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var fusedLocationClient : FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
+    private lateinit var location: Location
 
-    private lateinit var latitudeTextView: TextView
-    private lateinit var longitudeTextView: TextView
+    private lateinit var googleMap : GoogleMap
+    private lateinit var mapView : MapView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +55,16 @@ class MapFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        latitudeTextView = view.findViewById(R.id.latitude_text)
-        longitudeTextView = view.findViewById(R.id.longitude_text)
+        mapView = view.findViewById(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
+        mapView.onResume()
+        mapView.getMapAsync(this)
     }
 
     private fun enableMyLocation() {
         if (isPermissionGranted()) {
             //setUpLocationRequest()
-            getLastLocation()
+            //getLastLocation()
         } else {
             requestPermissions()
         }
@@ -101,6 +110,7 @@ class MapFragment : Fragment() {
                 }
             } else {
                 setLocation(it)
+                updateMap(it)
             }
         }
     }
@@ -125,6 +135,7 @@ class MapFragment : Fragment() {
         override fun onLocationResult(locationResult: LocationResult) {
             val location = locationResult.lastLocation
             setLocation(location)
+            //updateMap(location)
         }
     }
 
@@ -146,8 +157,7 @@ class MapFragment : Fragment() {
     }
 
     private fun setLocation(location: Location) {
-        latitudeTextView.text = getString(R.string.latitude_text, location.latitude.toString())
-        longitudeTextView.text = getString(R.string.longitude_text, location.longitude.toString())
+        this.location = location
     }
 
     companion object {
@@ -168,6 +178,32 @@ class MapFragment : Fragment() {
 
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        val latitude = 37.422160
+        val longitude = -122.084270
+        val latLng = LatLng(0.0, 0.0)
+        val zoomLevel = 15f
+        map?.let {
+            googleMap = it
+            getLastLocation()
+            //googleMap.addMarker(MarkerOptions().position(latLng).title("Initial"))
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+            //updateMap(location)
+            googleMap.isMyLocationEnabled = true
+        }
+
+    }
+
+    override fun onMarkerClick(p0: Marker?): Boolean {
+        return false
+    }
+
+    private fun updateMap(location: Location, zoomLevel: Float = 15f) {
+        val latLng = LatLng(location.latitude, location.longitude)
+        googleMap.addMarker(MarkerOptions().position(latLng).title("Home"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
     }
 
 }
