@@ -23,6 +23,7 @@ import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.wajahatkarim3.roomexplorer.RoomExplorer
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -37,7 +38,8 @@ class LoginFragment : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var signUpTextView: TextView
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
+    private lateinit var users : List<User>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +68,7 @@ class LoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
             Log.d("DEBUG", "ESTOY EN LOGIN ${it.size}")
-            setCollection("Users")
+            getCollection("Users")
         })
     }
 
@@ -78,7 +80,7 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             if (email.isNotBlank() && password.isNotBlank()) {
-                if (authenticate(email, password)) {
+                if (firebaseAuthentication(email, password)) {
                     val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {
@@ -131,19 +133,23 @@ class LoginFragment : Fragment() {
                     Log.d("FAILUREEEE", "ERORRR UP ${it.message}")
                 }
         }
-        getCollection(collection)
     }
 
     private fun getCollection(collection: String) {
-        db.collection(collection).get()
+        db.collection(collection)
+            .get()
             .addOnSuccessListener {
-                for (document in it) {
-                    val user = document.toObject<User>()
-                    Log.d("TESSSTTTT", "DocumentSnapshot data: ${user.userId} ${user.email}")
-                }
+                users = it.toObjects<User>()
             }
-            .addOnFailureListener { e ->
-                Log.w("TAGGG ERRRPR", "Error getting document", e)
+            .addOnFailureListener {
+                view?.let { Snackbar.make(it, "Error getting data", Snackbar.LENGTH_SHORT).show() }
             }
+    }
+
+    private fun firebaseAuthentication(email : String, password : String) : Boolean {
+        for(user in users) {
+            if (user.email == email && user.password == password) return true
+        }
+        return false
     }
 }
