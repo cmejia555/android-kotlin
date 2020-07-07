@@ -18,8 +18,12 @@ import androidx.navigation.ui.setupWithNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.LocalDataBase
+import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.wajahatkarim3.roomexplorer.RoomExplorer
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -33,6 +37,7 @@ class LoginFragment : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var signUpTextView: TextView
+    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +66,7 @@ class LoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
             Log.d("DEBUG", "ESTOY EN LOGIN ${it.size}")
+            setCollection("Users")
         })
     }
 
@@ -93,6 +99,7 @@ class LoginFragment : Fragment() {
         fab_database.setOnClickListener {
             RoomExplorer.show(context, LocalDataBase::class.java, "mydatabase")
         }
+
     }
 
     override fun onResume() {
@@ -110,4 +117,33 @@ class LoginFragment : Fragment() {
         return false
     }
 
+    private fun setCollection(collection : String) {
+        val users = viewModel.getAllUsers().value!!
+        for (user in users) {
+            db.collection(collection)
+                .document(user.userId.toString())
+                .set(user)
+                .addOnSuccessListener {
+                    Log.d("EXITOSOS", "SE SUBIOOOOOO EL USER")
+
+                }
+                .addOnFailureListener {
+                    Log.d("FAILUREEEE", "ERORRR UP ${it.message}")
+                }
+        }
+        getCollection(collection)
+    }
+
+    private fun getCollection(collection: String) {
+        db.collection(collection).get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val user = document.toObject<User>()
+                    Log.d("TESSSTTTT", "DocumentSnapshot data: ${user.userId} ${user.email}")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("TAGGG ERRRPR", "Error getting document", e)
+            }
+    }
 }
