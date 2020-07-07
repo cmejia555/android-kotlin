@@ -18,8 +18,13 @@ import androidx.navigation.ui.setupWithNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.LocalDataBase
+import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.ktx.Firebase
 import com.wajahatkarim3.roomexplorer.RoomExplorer
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -33,6 +38,8 @@ class LoginFragment : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var signUpTextView: TextView
+    private val db = Firebase.firestore
+    private lateinit var users : List<User>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +62,8 @@ class LoginFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment))
         toolbar.setupWithNavController(navController, appBarConfiguration)
         (activity as AppCompatActivity).setupActionBarWithNavController(navController, appBarConfiguration)
+
+        getCollection("Users")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -72,7 +81,7 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             if (email.isNotBlank() && password.isNotBlank()) {
-                if (authenticate(email, password)) {
+                if (firebaseAuthentication(email, password)) {
                     val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {
@@ -93,6 +102,7 @@ class LoginFragment : Fragment() {
         fab_database.setOnClickListener {
             RoomExplorer.show(context, LocalDataBase::class.java, "mydatabase")
         }
+
     }
 
     override fun onResume() {
@@ -110,4 +120,51 @@ class LoginFragment : Fragment() {
         return false
     }
 
+    private fun setCollection(collection : String) {
+        val users = viewModel.getAllUsers().value!!
+        for (user in users) {
+            db.collection(collection)
+                .document(user.userId.toString())
+                .set(user)
+                .addOnSuccessListener {
+                    Log.d("EXITOSOS", "SE SUBIOOOOOO EL USER")
+
+                }
+                .addOnFailureListener {
+                    Log.d("FAILUREEEE", "ERORRR UP ${it.message}")
+                }
+        }
+    }
+
+    private fun getCollection(collection: String) {
+        db.collection(collection)
+            .get()
+            .addOnSuccessListener {
+                users = it.toObjects<User>()
+                addSnapshot(collection)
+            }
+            .addOnFailureListener {
+                view?.let { Snackbar.make(it, "Error getting data", Snackbar.LENGTH_SHORT).show() }
+            }
+    }
+    
+    private fun addSnapshot(collection: String) {
+        db.collection(collection)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.w("ERRORR SNAPSHOT", "Listen failed.", error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null && !snapshot.isEmpty) {
+                    users = snapshot.toObjects<User>()
+                }
+            }
+    }
+
+    private fun firebaseAuthentication(email : String, password : String) : Boolean {
+        for(user in users) {
+            if (user.email == email && user.password == password) return true
+        }
+        return false
+    }
 }

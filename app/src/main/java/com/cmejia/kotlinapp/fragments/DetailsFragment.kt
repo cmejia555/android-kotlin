@@ -18,6 +18,8 @@ import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -34,6 +36,7 @@ class DetailsFragment : Fragment() {
     lateinit var car: Car
     private val carsViewModel : CarsViewModel by activityViewModels()
     private val detailsViewModels : DetailsViewModels by activityViewModels()
+    private val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,6 +99,7 @@ class DetailsFragment : Fragment() {
         detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
             if (action == DetailsViewModels.DialogState.DELETE_ITEM) {
                 carsViewModel.deleteCar(car)
+                deleteCar(car)
                 findNavController().popBackStack(R.id.listFragment, false)
             }
         })
@@ -129,6 +133,10 @@ class DetailsFragment : Fragment() {
                 .into(carImage)
 
         } else carImage.setImageResource(R.drawable.image_not_available)
+    }
+
+    private fun deleteCar(car : Car) {
+        db.collection("Cars").document(car.carId.toString()).delete()
     }
 
 }

@@ -11,7 +11,7 @@ import com.cmejia.kotlinapp.entities.User
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var allUsers : LiveData<List<User>>
+    private val allUsers : LiveData<List<User>>
     private var userDao : UserDao
     private var newUserId : Int = 0
 
