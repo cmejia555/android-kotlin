@@ -73,20 +73,23 @@ class ListFragment : Fragment() {
                 true
             }
         }
+
+        getCollection("Cars")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         carViewModel.getAllCars().observe(viewLifecycleOwner, Observer { list ->
             //viewAdapter.carList = list
-            getCollection("Cars")
         })
     }
 
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
-            carViewModel.insertCar(Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  ""))
+            val emptyCar = Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  "")
+            carViewModel.insertCar(emptyCar)
+            addCar(emptyCar)
         }
     }
 
@@ -121,9 +124,29 @@ class ListFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 viewAdapter.carList = it.toObjects<Car>()
+                addSnapshot(collection)
             }
             .addOnFailureListener {
                 view?.let { Snackbar.make(it, "Error getting data", Snackbar.LENGTH_SHORT).show() }
+            }
+    }
+
+    private fun addCar(car : Car) {
+        db.collection("Cars").document(car.carId.toString()).set(car)
+    }
+
+    private fun addSnapshot(collection: String) {
+        db.collection(collection)
+            .orderBy("carId")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.w("ERRORR SNAPSHOT", "Listen failed.", error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null && !snapshot.isEmpty) {
+                    Log.d("SNAPSHOT", "LISTEN")
+                    viewAdapter.carList = snapshot.toObjects<Car>()
+                }
             }
     }
 

@@ -62,13 +62,14 @@ class LoginFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment))
         toolbar.setupWithNavController(navController, appBarConfiguration)
         (activity as AppCompatActivity).setupActionBarWithNavController(navController, appBarConfiguration)
+
+        getCollection("Users")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
             Log.d("DEBUG", "ESTOY EN LOGIN ${it.size}")
-            getCollection("Users")
         })
     }
 
@@ -140,9 +141,23 @@ class LoginFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 users = it.toObjects<User>()
+                addSnapshot(collection)
             }
             .addOnFailureListener {
                 view?.let { Snackbar.make(it, "Error getting data", Snackbar.LENGTH_SHORT).show() }
+            }
+    }
+    
+    private fun addSnapshot(collection: String) {
+        db.collection(collection)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.w("ERRORR SNAPSHOT", "Listen failed.", error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null && !snapshot.isEmpty) {
+                    users = snapshot.toObjects<User>()
+                }
             }
     }
 
