@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.cmejia.kotlinapp.R
+import com.cmejia.kotlinapp.adapters.FirebaseRecycleViewAdapter
 import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
 import com.cmejia.kotlinapp.entities.Car
-import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
@@ -57,7 +59,8 @@ class ListFragment : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_list).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = viewAdapter
+            //adapter = viewAdapter
+            adapter = getRecycleViewAdapter()
         }
 
         (activity as AppCompatActivity).findViewById<Toolbar>(R.id.toolbar).apply {
@@ -74,7 +77,7 @@ class ListFragment : Fragment() {
             }
         }
 
-        getCollection("Cars")
+        //getCollection("Cars")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -148,6 +151,25 @@ class ListFragment : Fragment() {
                     viewAdapter.carList = snapshot.toObjects<Car>()
                 }
             }
+    }
+
+    private val onClickListenerAdapter = { car : Car ->
+        detailsViewModels.itemSelected.value = car
+        view?.findNavController()?.navigate(
+            ListFragmentDirections.actionListFragmentToCollectionFragment()
+        )
+    }
+
+    private fun getRecycleViewAdapter() : FirebaseRecycleViewAdapter {
+        val rootRef = FirebaseFirestore.getInstance()
+        val query = rootRef.collection("Cars").orderBy("carId")
+        val options = FirestoreRecyclerOptions.Builder<Car>()
+            .setQuery(query, Car::class.java)
+            .build()
+        val firebaseAdapter = FirebaseRecycleViewAdapter(onClickListenerAdapter, options)
+
+        firebaseAdapter.startListening()
+        return firebaseAdapter
     }
 
 }
