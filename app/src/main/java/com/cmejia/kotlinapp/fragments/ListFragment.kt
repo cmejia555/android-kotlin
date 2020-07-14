@@ -97,9 +97,9 @@ class ListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        carViewModel.getAllCars().observe(viewLifecycleOwner, Observer { list ->
+        //carViewModel.getAllCars().observe(viewLifecycleOwner, Observer { list ->
             //viewAdapter.carList = list
-        })
+        //})
         userAuthViewModel.authStatus.observe(viewLifecycleOwner, Observer {
             updateProfileUI(it)
         })
@@ -158,8 +158,8 @@ class ListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         addFloatingButton.setOnClickListener {
-            val emptyCar = Car( brand = "Empty", model = "Empty", year = 0, imageUrl =  "")
-            carViewModel.insertCar(emptyCar)
+            val emptyCar = Car(carId = System.currentTimeMillis(), brand = "Empty", model = "Empty", year = 0, imageUrl =  "")
+            //carViewModel.insertCar(emptyCar)
             addCar(emptyCar)
         }
     }
