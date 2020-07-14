@@ -87,4 +87,9 @@
         android:id="@+id/settingsFragment"
         android:name="com.cmejia.kotlinapp.fragments.SettingsFragment"
         android:label="Settings" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.cmejia.kotlinapp.fragments.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

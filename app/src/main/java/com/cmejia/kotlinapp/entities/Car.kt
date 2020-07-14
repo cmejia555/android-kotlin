@@ -24,4 +24,6 @@ data class Car(
 
     @ColumnInfo(name = "description")
     var description : String = ""
-)
+) {
+    constructor() : this(brand = "", model = "", year = 0, imageUrl =  "")
+}

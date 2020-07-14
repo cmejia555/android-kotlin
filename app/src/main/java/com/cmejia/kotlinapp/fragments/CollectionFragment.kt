@@ -47,6 +47,7 @@ class CollectionFragment : Fragment() {
             when(position) {
                 0 -> tab.text = resources.getText(R.string.details_tab)
                 1 -> tab.text = resources.getText(R.string.gallery_tab)
+                2 -> tab.text = getString(R.string.map_tab)
             }
         }.attach()
 
