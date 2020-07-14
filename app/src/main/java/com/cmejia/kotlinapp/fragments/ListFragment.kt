@@ -3,14 +3,18 @@ package com.cmejia.kotlinapp.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.adapters.FirebaseRecycleViewAdapter
@@ -18,13 +22,18 @@ import com.cmejia.kotlinapp.adapters.RecyclerViewAdapter
 import com.cmejia.kotlinapp.entities.Car
 import com.cmejia.kotlinapp.models.CarsViewModel
 import com.cmejia.kotlinapp.models.DetailsViewModels
+import com.cmejia.kotlinapp.models.UserAuthViewModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
 
 
@@ -32,6 +41,7 @@ class ListFragment : Fragment() {
 
     private val carViewModel : CarsViewModel by activityViewModels()
     private val detailsViewModels : DetailsViewModels by activityViewModels()
+    private val userAuthViewModel : UserAuthViewModel by activityViewModels()
 
     private lateinit var addFloatingButton : FloatingActionButton
     private lateinit var recyclerView : RecyclerView
@@ -77,6 +87,9 @@ class ListFragment : Fragment() {
             }
         }
 
+        setDrawerNavigationOptions()
+
+
         //getCollection("Cars")
     }
 
@@ -85,6 +98,38 @@ class ListFragment : Fragment() {
         carViewModel.getAllCars().observe(viewLifecycleOwner, Observer { list ->
             //viewAdapter.carList = list
         })
+        userAuthViewModel.authStatus.observe(viewLifecycleOwner, Observer {
+            updateProfileUI(it)
+        })
+    }
+
+    private fun setDrawerNavigationOptions() {
+        val navView = requireActivity().findViewById<NavigationView>(R.id.nav_view)
+        navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.logout -> {
+                    userAuthViewModel.authStatus.value = UserAuthViewModel.Authentication.UNAUTHENTICATED
+                    Firebase.auth.signOut()
+                    requireActivity().drawer_layout.closeDrawer(GravityCompat.START)
+                    view?.findNavController()?.popBackStack(R.id.loginFragment, false)
+                }
+            }
+            true
+        }
+
+    }
+
+    private fun updateProfileUI(status : UserAuthViewModel.Authentication) {
+        if (status == UserAuthViewModel.Authentication.AUTHENTICATED) {
+            val user = Firebase.auth.currentUser
+            requireActivity().findViewById<TextView>(R.id.user_auth_name)
+                .text = getString(R.string.drawer_header_name_text, user?.displayName)
+            val image = requireActivity().findViewById<ImageView>(R.id.user_auth_photo)
+            Glide.with(image)
+                .load(user?.photoUrl)
+                .circleCrop()
+                .into(image)
+        }
     }
 
     override fun onStart() {
