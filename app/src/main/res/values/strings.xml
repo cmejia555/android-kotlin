@@ -76,5 +76,9 @@
     <string name="delete_title">Eliminar items</string>
     <string name="delete_summary_on">Se puede eliminar el item al presionar Aceptar</string>
     <string name="delete_summary_off">No se puede eliminar los items de la lista</string>
+    <string name="photo_profile">Foto de perfil</string>
+    <string name="drawer_profile_text">Perfil</string>
+    <string name="drawer_sign_out_text">Salir</string>
+    <string name="drawer_header_name_text">Bienvenido %1$s</string>
 
 </resources>

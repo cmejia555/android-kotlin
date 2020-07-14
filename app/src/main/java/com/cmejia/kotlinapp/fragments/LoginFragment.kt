@@ -10,21 +10,26 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 
 import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.LocalDataBase
 import com.cmejia.kotlinapp.entities.User
+import com.cmejia.kotlinapp.models.UserAuthViewModel
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -34,12 +39,14 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.wajahatkarim3.roomexplorer.RoomExplorer
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_login.*
 
 
 class LoginFragment : Fragment() {
 
     private val viewModel : UserViewModel by activityViewModels()
+    private val userAuthViewModel : UserAuthViewModel by activityViewModels()
 
     private lateinit var v : View
     private lateinit var emailEditText: EditText
@@ -68,11 +75,16 @@ class LoginFragment : Fragment() {
         signUpTextView = view.findViewById(R.id.sign_up_tv)
         googleSignIn = view.findViewById(R.id.google_sign_in)
 
+        val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+        val navigationView = requireActivity().findViewById<NavigationView>(R.id.nav_view)
+
         val toolbar : Toolbar = requireActivity().findViewById(R.id.toolbar)
         val navController = view.findNavController()
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.listFragment), drawerLayout = drawerLayout)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+        navigationView.setupWithNavController(navController)
         (activity as AppCompatActivity).setupActionBarWithNavController(navController, appBarConfiguration)
+        toolbar.navigationIcon = null
 
         getCollection("Users")
         auth = Firebase.auth
@@ -206,6 +218,7 @@ class LoginFragment : Fragment() {
             .signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 Log.d("AUTHHHH", "signInWithEmail:success")
+                userAuthViewModel.authStatus.value = UserAuthViewModel.Authentication.AUTHENTICATED
                 val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                 view?.findNavController()?.navigate(action)
             }
@@ -249,6 +262,7 @@ class LoginFragment : Fragment() {
                 Log.d("GOOGLE SIGN ING", "signInWithCredential:success")
                 val user = auth.currentUser
                 updateUI(user)
+                userAuthViewModel.authStatus.value = UserAuthViewModel.Authentication.AUTHENTICATED
                 val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                 view?.findNavController()?.navigate(action)
             }
