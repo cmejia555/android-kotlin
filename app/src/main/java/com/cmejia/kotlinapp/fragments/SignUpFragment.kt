@@ -1,6 +1,7 @@
 package com.cmejia.kotlinapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -55,7 +57,7 @@ class SignUpFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             if (userName.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
-                if (!isUserRegistered(email)) {
+                /*if (!isUserRegistered(email)) {
                     val newUser = User(userName = userName, email = email, password = password)
                     viewModel.insertUser(newUser)
                     addUser(newUser)
@@ -63,7 +65,8 @@ class SignUpFragment : Fragment() {
                     it.findNavController().navigate(action)
                 } else {
                     Snackbar.make(it, "The email already exists", Snackbar.LENGTH_SHORT).show()
-                }
+                }*/
+                registerWithAuthentication(email, password)
             }
             else {
                 Snackbar.make(it, "Please complete all fields", Snackbar.LENGTH_SHORT).show()
@@ -76,6 +79,20 @@ class SignUpFragment : Fragment() {
 
     private fun addUser(user : User) {
         db.collection("Users").document(user.userId.toString()).set(user)
+    }
+
+    private fun registerWithAuthentication(email : String, password : String) {
+        FirebaseAuth.getInstance()
+            .createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                Log.d("AUTHHHH", "createWithEmail:success")
+                val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
+                view?.findNavController()?.navigate(action)
+            }
+            .addOnFailureListener {
+                Log.d("AUTHHHH", "createWithEmail:failed ${it.message}")
+                view?.let { v -> Snackbar.make(v, "Failed to create user", Snackbar.LENGTH_SHORT).show() }
+            }
     }
 
 }

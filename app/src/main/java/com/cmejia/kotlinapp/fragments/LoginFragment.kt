@@ -1,5 +1,6 @@
 package com.cmejia.kotlinapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -20,9 +21,16 @@ import com.cmejia.kotlinapp.R
 import com.cmejia.kotlinapp.database.LocalDataBase
 import com.cmejia.kotlinapp.entities.User
 import com.cmejia.kotlinapp.models.UserViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.wajahatkarim3.roomexplorer.RoomExplorer
@@ -40,6 +48,8 @@ class LoginFragment : Fragment() {
     private lateinit var signUpTextView: TextView
     private val db = Firebase.firestore
     private lateinit var users : List<User>
+    private lateinit var auth : FirebaseAuth
+    private lateinit var googleSignIn: SignInButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +66,7 @@ class LoginFragment : Fragment() {
         passwordEditText = view.findViewById(R.id.login_password_et)
         loginButton = view.findViewById(R.id.login_btn)
         signUpTextView = view.findViewById(R.id.sign_up_tv)
+        googleSignIn = view.findViewById(R.id.google_sign_in)
 
         val toolbar : Toolbar = requireActivity().findViewById(R.id.toolbar)
         val navController = view.findNavController()
@@ -64,6 +75,7 @@ class LoginFragment : Fragment() {
         (activity as AppCompatActivity).setupActionBarWithNavController(navController, appBarConfiguration)
 
         getCollection("Users")
+        auth = Firebase.auth
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -76,17 +88,21 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        val currentUser = auth.currentUser
+        updateUI(currentUser)
+
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
             if (email.isNotBlank() && password.isNotBlank()) {
-                if (firebaseAuthentication(email, password)) {
+                firebaseAuthWithEmailAndPass(email, password)
+                /*if (firebaseAuthentication(email, password)) {
                     val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
                     it.findNavController().navigate(action)
                 } else {
                     Snackbar.make(it, "The email or password is incorrect", Snackbar.LENGTH_SHORT).show()
-                }
+                }*/
             }
             else {
                 Snackbar.make(it, "Please complete all fields", Snackbar.LENGTH_SHORT).show()
@@ -103,6 +119,23 @@ class LoginFragment : Fragment() {
             RoomExplorer.show(context, LocalDataBase::class.java, "mydatabase")
         }
 
+        setupSignInWithGoogle()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GOOGLE_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                if (account != null) {
+                    Log.d("GOOGLE SIGN IN", "firebaseAuthWithGoogle: ${account.id}")
+                    firebaseAuthWithGoogle(account.idToken!!)
+                }
+            } catch (e : ApiException) {
+                Log.w("ERROR", "Google sign in failed", e)
+            }
+        }
     }
 
     override fun onResume() {
@@ -166,5 +199,62 @@ class LoginFragment : Fragment() {
             if (user.email == email && user.password == password) return true
         }
         return false
+    }
+
+    private fun firebaseAuthWithEmailAndPass(email : String, password : String) {
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                Log.d("AUTHHHH", "signInWithEmail:success")
+                val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
+                view?.findNavController()?.navigate(action)
+            }
+            .addOnFailureListener {
+                Log.d("AUTHHHH", "signInWithEmail:failed ${it.message}")
+                view?.let { it -> Snackbar.make(it, "The email or password is incorrect", Snackbar.LENGTH_SHORT).show() }
+            }
+    }
+
+    private fun updateUI(user : FirebaseUser?) {
+        if (user != null) {
+            emailEditText.setText(user.email)
+            //passwordEditText.setText(user)
+        } else {
+            emailEditText.setText("")
+            passwordEditText.setText("")
+        }
+    }
+
+    private fun setupSignInWithGoogle() {
+        val googleConfiguration = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignIn.setOnClickListener {
+            val googleClient = GoogleSignIn.getClient(requireActivity(), googleConfiguration)
+            googleClient.signOut()
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
+        }
+    }
+
+    companion object {
+        private const val GOOGLE_SIGN_IN = 91
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnSuccessListener {
+                Log.d("GOOGLE SIGN ING", "signInWithCredential:success")
+                val user = auth.currentUser
+                updateUI(user)
+                val action = LoginFragmentDirections.actionLoginFragmentToListFragment()
+                view?.findNavController()?.navigate(action)
+            }
+            .addOnFailureListener {
+                Log.d("GOOGLE SIGN ING", "signInWithEmail:failure ${it.message}")
+                view?.let { it -> Snackbar.make(it, "The email or password is incorrect", Snackbar.LENGTH_SHORT).show() }
+            }
     }
 }
