@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.*
 
 
 class ListFragment : Fragment() {
@@ -109,15 +111,36 @@ class ListFragment : Fragment() {
             when (it.itemId) {
                 R.id.logout -> {
                     userAuthViewModel.authStatus.value = UserAuthViewModel.Authentication.UNAUTHENTICATED
+                    val parentJob = Job()
+                    val handler = CoroutineExceptionHandler { _, throwable ->
+                        Log.d("demo", "handler: $throwable") // Prints "handler: java.io.IOException"
+                    }
+
+                    val scope = CoroutineScope(Dispatchers.Main + parentJob + handler)
+                    scope.launch {
+                        val asyncSignOut = async { signOut() }
+
+                        if (asyncSignOut.await() == null) {
+                            requireActivity().drawer_layout.closeDrawer(GravityCompat.START)
+                            view?.findNavController()?.popBackStack(R.id.loginFragment, false)
+                        }
+                    }
+                    /*userAuthViewModel.authStatus.value = UserAuthViewModel.Authentication.UNAUTHENTICATED
                     Firebase.auth.signOut()
                     requireActivity().drawer_layout.closeDrawer(GravityCompat.START)
-                    view?.findNavController()?.popBackStack(R.id.loginFragment, false)
+                    view?.findNavController()?.popBackStack(R.id.loginFragment, false)*/
                 }
             }
             true
         }
 
     }
+
+    private suspend fun signOut() : FirebaseUser? {
+        Firebase.auth.signOut()
+        return Firebase.auth.currentUser
+    }
+
 
     private fun updateProfileUI(status : UserAuthViewModel.Authentication) {
         if (status == UserAuthViewModel.Authentication.AUTHENTICATED) {
