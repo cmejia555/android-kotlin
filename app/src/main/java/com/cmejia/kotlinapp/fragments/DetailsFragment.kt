@@ -98,7 +98,7 @@ class DetailsFragment : Fragment() {
 
         detailsViewModels.actionStatus.observe(viewLifecycleOwner, Observer { action ->
             if (action == DetailsViewModels.DialogState.DELETE_ITEM) {
-                carsViewModel.deleteCar(car)
+                //carsViewModel.deleteCar(car)
                 deleteCar(car)
                 findNavController().popBackStack(R.id.listFragment, false)
             }

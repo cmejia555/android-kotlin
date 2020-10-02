@@ -23,7 +23,13 @@ data class Car(
     var imageUrl : String,
 
     @ColumnInfo(name = "description")
-    var description : String = ""
+    var description : String = "",
+
+    @ColumnInfo(name = "latitude")
+    var latitude : Double = 0.0,
+
+    @ColumnInfo(name = "longitude")
+    var longitude : Double = 0.0
 ) {
-    constructor() : this(brand = "", model = "", year = 0, imageUrl =  "")
+    constructor() : this(brand = "", model = "", year = 0, imageUrl =  "", latitude = 0.0, longitude = 0.0)
 }

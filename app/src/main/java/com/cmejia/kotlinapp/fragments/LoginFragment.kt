@@ -92,9 +92,9 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
+        /*viewModel.getAllUsers().observe(viewLifecycleOwner, Observer {
             Log.d("DEBUG", "ESTOY EN LOGIN ${it.size}")
-        })
+        })*/
     }
 
     override fun onStart() {

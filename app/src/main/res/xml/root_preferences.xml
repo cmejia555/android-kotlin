@@ -2,11 +2,6 @@
 
     <PreferenceCategory app:title="@string/screen">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
         <ListPreference
             app:defaultValue="light"
             app:entries="@array/screen_mode_entries"
