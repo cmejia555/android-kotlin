@@ -16,8 +16,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 
 import com.cmejia.kotlinapp.R
+import com.cmejia.kotlinapp.models.DetailsViewModels
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -36,6 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
     private lateinit var googleMap : GoogleMap
     private lateinit var mapView : MapView
+    private val detailsViewModels : DetailsViewModels by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,7 +115,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
                 }
             } else {
                 setLocation(it)
-                updateMap(it)
+                //updateMap(it)
             }
         }
     }
@@ -192,6 +197,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
             //updateMap(location)
             googleMap.isMyLocationEnabled = true
+            detailsViewModels.itemSelected.observe(viewLifecycleOwner, Observer { item ->
+                upMap(item.latitude, item.longitude)
+            })
         }
 
     }
@@ -199,6 +207,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     override fun onMarkerClick(p0: Marker?): Boolean {
         return false
     }
+
+    private fun upMap(lat : Double, lon : Double) {
+        val latLng = LatLng(lat, lon)
+        googleMap.addMarker(MarkerOptions().position(latLng).title("Home"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+    }
+
 
     private fun updateMap(location: Location, zoomLevel: Float = 15f) {
         val latLng = LatLng(location.latitude, location.longitude)
